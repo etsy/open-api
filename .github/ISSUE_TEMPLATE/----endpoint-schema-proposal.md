@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Current Endpoint Schema**
-Add information about current endpoint schema
+What about the current endpoint schema do you find confusing?
 
 **Proposed Endpoint Schema** 
 Add information about your proposed change 

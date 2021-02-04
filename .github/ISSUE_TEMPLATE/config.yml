@@ -1,0 +1,4 @@
+contact_links:
+    - name: 🤔 Questions and Help
+      url: "mailto:developers@etsy.com"
+      about: For questions and help regarding OpenAPI v2, please email us at developers@etsy.com
