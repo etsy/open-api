@@ -1,4 +1,4 @@
 contact_links:
     - name: 🤔 Questions and Help
-      url: "mailto:developers@etsy.com"
+      url: https://www.etsy.com/developers/documentation/resources/developer_resources
       about: For questions and help regarding OpenAPI v2, or your implementation of the new OpenAPI v3, please email us at developers@etsy.com
