@@ -25,7 +25,7 @@ Data model stability | Significant design changes likely | Design changes possib
 
 ## New reference documentation
 
-We have created a [new API reference documentation site](https://www.etsy.com/openapi/developers) that will replace the current v2 documentation. We designed it to be more usable, complete, and easy to navigate. It will also be easier for our team to keep up-to-date with the functionality of the endpoints themselves, so you can find the information you need quickly and trust that it’s accurate. If you have feedback or suggestions about our documentation, you can [open an issue in Github](https://github.com/etsy/open-api/issues/new').
+We have created a [new API reference documentation site](https://www.etsy.com/openapi/developers) that will replace the current v2 documentation. We designed it to be more usable, complete, and easy to navigate. It will also be easier for our team to keep up-to-date with the functionality of the endpoints themselves, so you can find the information you need quickly and trust that it’s accurate. If you have feedback or suggestions about our documentation, you can [open an issue in Github](https://github.com/etsy/open-api/issues/new/choose).
 
 ## Access the new endpoints
 
@@ -33,7 +33,7 @@ If you would like to make requests to the Open API v3 endpoints, please contact 
 
 ## Give feedback
 
-In addition to our [reference documentation](https://www.etsy.com/openapi/developers), we have published the details of our API specification publicly on Github in the [OpenAPI Specification (OAS) format](https://swagger.io/specification/). If you’d like to report an issue or provide feedback on the API design, please [open an issue in Github](https://www.github.com/etsy/open-api/issues/new).
+In addition to our [reference documentation](https://www.etsy.com/openapi/developers), we have published the details of our API specification publicly on Github in the [OpenAPI Specification (OAS) format](https://swagger.io/specification/). If you’d like to report an issue or provide feedback on the API design, please [open an issue in Github](https://github.com/etsy/open-api/issues/new/choose).
 
 ## FAQ
 
@@ -49,15 +49,15 @@ We’ll give you ample time, notice, and support to migrate your app to the new 
 
 ### How can I get help with my migration?
 
-There’s a lot of helpful documentation available to you, including the [reference docs](https://www.etsy.com/openapi/developers) and this migration guide. If you have a suggestion for something you’d like to see in our new API or documentation, you can [open an issue on Github](https://github.com/etsy/open-api/issues/new'). If you suspect you’ve found a bug or are having trouble with your migration, you can contact us at [developers@etsy.com](mailto:developers@etsy.com).
+There’s a lot of helpful documentation available to you, including the [reference docs](https://www.etsy.com/openapi/developers) and this migration guide. If you have a suggestion for something you’d like to see in our new API or documentation, you can [open an issue on Github](https://github.com/etsy/open-api/issues/new/choose). If you suspect you’ve found a bug or are having trouble with your migration, you can contact us at [developers@etsy.com](mailto:developers@etsy.com).
 
 ### How can I stay informed of changes to the API?
 
-We’ll be communicating often over the course of 2021 about updates, upcoming milestones, and new ways to give feedback and get involved. Make sure that the [contact information](https://www.etsy.com/your/account) on the Etsy account that owns your API application is up-to-date.
+We’ll be communicating often over the course of 2021 about updates, upcoming milestones, and new ways to give feedback and get involved. Make sure that the [contact information](https://www.etsy.com/your/account) on the Etsy account that owns your API application is up-to-date, and that you subscribe to the [Etsy API Google Group](https://groups.google.com/g/etsy-api-v2).
 
 ### How can I provide feedback on the API?
 
-If you’d like to report an issue or provide feedback on the API design or documentation, please [open an issue in Github](https://github.com/etsy/open-api/issues/new).
+If you’d like to report an issue or provide feedback on the API design or documentation, please [open an issue in Github](https://github.com/etsy/open-api/issues/new/choose).
 
 ## Summary of Changes
 
@@ -145,12 +145,13 @@ who_made<br>*required* | string<br>Enum: "i_did" "someone_else" "collective”
 Work is in progress to define a schema in v3 for this resource.
 
 #### ShopReceiptShipment
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/receiptshipment">ReceiptShipment</a>*
-v2 Endpoint | v3 Endpoint | Notes
---- | --- | ---
-<a href="https://www.etsy.com/developers/documentation/reference/receipt, receiptshipment#method_submittracking">submitTracking</a> | <a href="https://www.etsy.com/openapi/developers#operation/createReceiptShipment">createReceiptShipment</a> |
+
+There are no endpoints associated with this resource.
 
 #### Payment
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/payment#method_findpayment">findPayment</a> | <a href="https://www.etsy.com/openapi/developers#operation/getPayments">getPayments</a> |
@@ -159,14 +160,21 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/payment#method_findpaymentforpaymentaccountledgerentry">findPaymentForPaymentAccountLedgerEntry</a> | <a href="https://www.etsy.com/openapi/developers#operation/getPaymentAccountLedgerEntryPayments">getPaymentAccountLedgerEntryPayments</a> |
 
 #### ShopListingVariationImage
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/listingvariationimage">ListingVariationImage</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/listingvariationimage#method_getvariationimages">getVariationImages</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListingVariationImages">getListingVariationImages</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/listingvariationimage#method_updatevariationimages">updateVariationImages</a> | <a href="https://www.etsy.com/openapi/developers#operation/updateVariationImages">updateVariationImages</a> |
 
+#### FeedbackInfo
+Work is in progress to define a schema in v3 for this resource.
+
 #### ShippingProfileUpgrade
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/shippingupgrade">ShippingUpgrade</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/shippingupgrade#method_getlistingshippingupgrades">getListingShippingUpgrades</a> | *Retired* |
@@ -179,13 +187,16 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/shippingupgrade#method_deleteshippingtemplateupgrade">deleteShippingTemplateUpgrade</a> | *v3 Endpoint Schema TBD* |
 
 #### User
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/userprofile">UserProfile</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
-<a href="https://www.etsy.com/developers/documentation/reference/userprofile#method_finduserprofile">findUserProfile</a> | <a href="https://www.etsy.com/openapi/developers#operation/getUser">getUser</a> |
+<a href="https://www.etsy.com/developers/documentation/reference/userprofile#method_finduserprofile">findUserProfile</a> | *v3 Endpoint Schema TBD* |
 <a href="https://www.etsy.com/developers/documentation/reference/userprofile#method_updateuserprofile">updateUserProfile</a> | *Retired* |
 
 #### ShopSection
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/shopsection#method_findallshopsections">findAllShopSections</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopSections">getShopSections</a> |
@@ -195,7 +206,9 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/shopsection#method_deleteshopsection">deleteShopSection</a> | *v3 Endpoint Schema TBD* |
 
 #### ShopListingFile
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/listingfile">ListingFile</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/listingfile#method_findalllistingfiles">findAllListingFiles</a> | <a href="https://www.etsy.com/openapi/developers#operation/getAllListingFiles">getAllListingFiles</a> |
@@ -204,14 +217,18 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/listingfile#method_deletelistingfile">deleteListingFile</a> | <a href="https://www.etsy.com/openapi/developers#operation/deleteListingFile">deleteListingFile</a> |
 
 #### PaymentAdjustment
+
+In v3, adjustments are returned by default in Payment responses.
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/paymentadjustment#method_findpaymentadjustments">findPaymentAdjustments</a> | *Retired* |
 <a href="https://www.etsy.com/developers/documentation/reference/paymentadjustment#method_findpaymentadjustment">findPaymentAdjustment</a> | *Retired* |
 <a href="https://www.etsy.com/developers/documentation/reference/paymentadjustment#method_findpaymentadjustmentforledgerentry">findPaymentAdjustmentForLedgerEntry</a> | *Retired* |
-<a href="https://www.etsy.com/developers/documentation/reference/paymentadjustment#method_findpaymentadjustmentforpaymentaccountledgerentry">findPaymentAdjustmentForPaymentAccountLedgerEntry</a> | *v3 Endpoint Schema TBD* |
+<a href="https://www.etsy.com/developers/documentation/reference/paymentadjustment#method_findpaymentadjustmentforpaymentaccountledgerentry">findPaymentAdjustmentForPaymentAccountLedgerEntry</a> | *Retired* |
 
 #### User
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/user#method_findallusers">findAllUsers</a> | *Retired* |
@@ -224,7 +241,9 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/user#method_connectusers">connectUsers</a> | *Retired* |
 
 #### ListingPropertyValue
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/propertyvalue">PropertyValue</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/propertyvalue#method_getattributes">getAttributes</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListingProperties">getListingProperties</a> |
@@ -233,19 +252,23 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/propertyvalue#method_deleteattribute">deleteAttribute</a> | *v3 Endpoint Schema TBD* |
 
 #### ShopReceipt
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/receipt">Receipt</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/receipt#method_getshop_receipt2">getShop_Receipt2</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopReceipt">getShopReceipt</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/receipt#method_updatereceipt">updateReceipt</a> | <a href="https://www.etsy.com/openapi/developers#operation/createReceiptShipment">createReceiptShipment</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/receipt#method_findallshopreceipts">findAllShopReceipts</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopReceipts">getShopReceipts</a> |
-<a href="https://www.etsy.com/developers/documentation/reference/receipt, receiptshipment#method_submittracking">submitTracking</a> | <a href="https://www.etsy.com/openapi/developers#operation/createReceiptShipment">createReceiptShipment</a> |
+<a href="https://www.etsy.com/developers/documentation/reference/receipt#method_submittracking">submitTracking</a> | <a href="https://www.etsy.com/openapi/developers#operation/createReceiptShipment">createReceiptShipment</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/receipt#method_findallshopreceiptsbystatus">findAllShopReceiptsByStatus</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopReceipts">getShopReceipts</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/receipt#method_searchallshopreceipts">searchAllShopReceipts</a> | *Retired* |
 <a href="https://www.etsy.com/developers/documentation/reference/receipt#method_findalluserbuyerreceipts">findAllUserBuyerReceipts</a> | *Retired* |
 
 #### ShopTransaction
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/transaction">Transaction</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/transaction#method_getshop_transaction">getShop_Transaction</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopReceiptTransaction">getShopReceiptTransaction</a> |
@@ -255,6 +278,7 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/transaction#method_findalluserbuyertransactions">findAllUserBuyerTransactions</a> | *Retired* |
 
 #### ListingTranslation
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/listingtranslation#method_getlistingtranslation">getListingTranslation</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListingTranslation">getListingTranslation</a> |
@@ -263,39 +287,47 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/listingtranslation#method_deletelistingtranslation">deleteListingTranslation</a> | *Retired* |
 
 #### ListingStyle
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/style">Style</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/style#method_findsuggestedstyles">findSuggestedStyles</a> | *v3 Endpoint Schema TBD* |
 
 #### ShopListingInventory
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/listinginventory">ListingInventory</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/listinginventory#method_getinventory">getInventory</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListingInventory">getListingInventory</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/listinginventory#method_updateinventory">updateInventory</a> | <a href="https://www.etsy.com/openapi/developers#operation/updateListingInventory">updateListingInventory</a> |
 
 #### ShopListingProduct
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/listingproduct">ListingProduct</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/listingproduct#method_getproduct">getProduct</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListingProduct">getListingProduct</a> |
 
 #### Shop
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/shop#method_findallshops">findAllShops</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShops">getShops</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/shop#method_getshop">getShop</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShop">getShop</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/shop#method_updateshop">updateShop</a> | <a href="https://www.etsy.com/openapi/developers#operation/updateShop">updateShop</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/shop#method_uploadshopbanner">uploadShopBanner</a> | *Retired* |
-<a href="https://www.etsy.com/developers/documentation/reference/shop#method_deleteshopbanner">deleteShopBanner</a> | *v3 Endpoint Schema TBD* |
+<a href="https://www.etsy.com/developers/documentation/reference/shop#method_deleteshopbanner">deleteShopBanner</a> | *Retired* |
 <a href="https://www.etsy.com/developers/documentation/reference/shop#method_getlistingshop">getListingShop</a> | *Retired* |
-<a href="https://www.etsy.com/developers/documentation/reference/shop#method_findallusershops">findAllUserShops</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopByOwnerUserId">getShopByOwnerUserId</a><br><a href="https://www.etsy.com/openapi/developers#operation/getShops">getShops</a> |
+<a href="https://www.etsy.com/developers/documentation/reference/shop#method_findallusershops">findAllUserShops</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopByOwnerUserId">getShopByOwnerUserId</a> |
 
 #### FavoriteUser
 Work is in progress to define a schema in v3 for this resource.
 
 #### UserAddress
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/useraddress#method_findalluseraddresses">findAllUserAddresses</a> | <a href="https://www.etsy.com/openapi/developers#operation/getUserAddresses">getUserAddresses</a> |
@@ -304,12 +336,15 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/useraddress#method_deleteuseraddress">deleteUserAddress</a> | *v3 Endpoint Schema TBD* |
 
 #### PaymentAccountLedgerEntry
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/paymentaccountledgerentry#method_findpaymentaccountentries">findPaymentAccountEntries</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopPaymentAccountLedgerEntries">getShopPaymentAccountLedgerEntries</a> |
 
 #### ShopListing
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/listing">Listing</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/listing#method_createlisting">createListing</a> | <a href="https://www.etsy.com/openapi/developers#operation/createListing">createListing</a> |
@@ -317,7 +352,7 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/listing#method_getlisting">getListing</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListing">getListing</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/listing#method_updatelisting">updateListing</a> | <a href="https://www.etsy.com/openapi/developers#operation/updateListing">updateListing</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/listing#method_deletelisting">deleteListing</a> | <a href="https://www.etsy.com/openapi/developers#operation/deleteListing">deleteListing</a> |
-<a href="https://www.etsy.com/developers/documentation/reference/listing#method_findalllistingactive">findAllListingActive</a> | *v3 Endpoint Schema TBD* |
+<a href="https://www.etsy.com/developers/documentation/reference/listing#method_findalllistingactive">findAllListingActive</a> | <a href="https://www.etsy.com/openapi/developers#operation/findAllListingsActive">findAllListingsActive</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/listing#method_getinterestinglistings">getInterestingListings</a> | *Retired* |
 <a href="https://www.etsy.com/developers/documentation/reference/listing#method_gettrendinglistings">getTrendingListings</a> | *Retired* |
 <a href="https://www.etsy.com/developers/documentation/reference/listing#method_findalllistingsforfeaturedtreasuryid">findAllListingsForFeaturedTreasuryId</a> | *Retired* |
@@ -339,7 +374,9 @@ v2 Endpoint | v3 Endpoint | Notes
 Work is in progress to define a schema in v3 for this resource.
 
 #### ShopListingImage
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/listingimage">ListingImage</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/listingimage#method_findalllistingimages">findAllListingImages</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListingImages">getListingImages</a> |
@@ -351,7 +388,9 @@ v2 Endpoint | v3 Endpoint | Notes
 Work is in progress to define a schema in v3 for this resource.
 
 #### ShippingProfile
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/shippingtemplate">ShippingTemplate</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/shippingtemplate#method_createshippingtemplate">createShippingTemplate</a> | <a href="https://www.etsy.com/openapi/developers#operation/createListingShippingProfile">createListingShippingProfile</a> |
@@ -362,60 +401,65 @@ v2 Endpoint | v3 Endpoint | Notes
 <a href="https://www.etsy.com/developers/documentation/reference/shippingtemplate#method_findallusershippingprofiles">findAllUserShippingProfiles</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListingShippingProfiles">getListingShippingProfiles</a> |
 
 #### ShopListingOffering
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/listingoffering">ListingOffering</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/listingoffering#method_getoffering">getOffering</a> | <a href="https://www.etsy.com/openapi/developers#operation/getListingOffering">getListingOffering</a> |
 
 #### ShippingProfileDestination
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/shippingtemplateentry">ShippingTemplateEntry</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
 <a href="https://www.etsy.com/developers/documentation/reference/shippingtemplateentry#method_createshippingtemplateentry">createShippingTemplateEntry</a> | <a href="https://www.etsy.com/openapi/developers#operation/createListingShippingProfileDestination">createListingShippingProfileDestination</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/shippingtemplateentry#method_getshippingtemplateentry">getShippingTemplateEntry</a> | *Retired* |
 <a href="https://www.etsy.com/developers/documentation/reference/shippingtemplateentry#method_updateshippingtemplateentry">updateShippingTemplateEntry</a> | <a href="https://www.etsy.com/openapi/developers#operation/updateListingShippingProfileDestination">updateListingShippingProfileDestination</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/shippingtemplateentry#method_deleteshippingtemplateentry">deleteShippingTemplateEntry</a> | <a href="https://www.etsy.com/openapi/developers#operation/deleteListingShippingProfileDestination">deleteListingShippingProfileDestination</a> |
-<a href="https://www.etsy.com/developers/documentation/reference/shippingtemplateentry#method_findalllistingshippingprofileentries">findAllListingShippingProfileEntries</a> | *v3 Endpoint Schema TBD* |
 
 #### Money
+
 There are no endpoints associated with this resource.
 
 #### UserFeedback
+
 *v2 Resource Name: <a href="https://www.etsy.com/developers/documentation/reference/feedback">Feedback</a>*
+
 v2 Endpoint | v3 Endpoint | Notes
 --- | --- | ---
-<a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findalluserfeedbackasauthor">findAllUserFeedbackAsAuthor</a> | <a href="https://www.etsy.com/openapi/developers#operation/getMemberUserFeedback">getMemberUserFeedback</a> |
-<a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findalluserfeedbackasbuyer">findAllUserFeedbackAsBuyer</a> | <a href="https://www.etsy.com/openapi/developers#operation/getMemberUserFeedback">getMemberUserFeedback</a> |
+<a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findalluserfeedbackasauthor">findAllUserFeedbackAsAuthor</a> | <a href="https://www.etsy.com/openapi/developers#operation/getMemberUserFeedback">getMemberUserFeedback</a><br><a href="https://www.etsy.com/openapi/developers#operation/getPublicUserFeedback">getPublicUserFeedback</a> |
+<a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findalluserfeedbackasbuyer">findAllUserFeedbackAsBuyer</a> | <a href="https://www.etsy.com/openapi/developers#operation/getMemberUserFeedback">getMemberUserFeedback</a><br><a href="https://www.etsy.com/openapi/developers#operation/getPublicUserFeedback">getPublicUserFeedback</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findalluserfeedbackasseller">findAllUserFeedbackAsSeller</a> | <a href="https://www.etsy.com/openapi/developers#operation/getPublicUserFeedback">getPublicUserFeedback</a><br><a href="https://www.etsy.com/openapi/developers#operation/getShopUserFeedback">getShopUserFeedback</a> |
-<a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findalluserfeedbackassubject">findAllUserFeedbackAsSubject</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopUserFeedback">getShopUserFeedback</a> |
+<a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findalluserfeedbackassubject">findAllUserFeedbackAsSubject</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopUserFeedback">getShopUserFeedback</a><br><a href="https://www.etsy.com/openapi/developers#operation/getPublicUserFeedback">getPublicUserFeedback</a> |
 <a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findallfeedbackfrombuyers">findAllFeedbackFromBuyers</a> | <a href="https://www.etsy.com/openapi/developers#operation/getShopUserFeedback">getShopUserFeedback</a><br><a href="https://www.etsy.com/openapi/developers#operation/getPublicUserFeedback">getPublicUserFeedback</a> |
-<a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findallfeedbackfromsellers">findAllFeedbackFromSellers</a> | *v3 Endpoint Schema TBD* |
+<a href="https://www.etsy.com/developers/documentation/reference/feedback#method_findallfeedbackfromsellers">findAllFeedbackFromSellers</a> | *Retired* |
 
 ### Retired Resources
 We are not planning to represent these v2 resources and associated endpoints in Open API v3 at this time. If you have a concern about any of these, [let us know](https://github.com/etsy/open-api).
 
-* <a href="https://www.etsy.com/developers/documentation/reference/treasury">Treasury</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/treasury">Treasury</a> - This resource was deprecated in v2.
   * <a href="https://www.etsy.com/developers/documentation/reference/treasury#method_findalltreasuries">findAllTreasuries</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/treasury#method_gettreasury">getTreasury</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/treasury#method_deletetreasury">deleteTreasury</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/treasury#method_findallusertreasuries">findAllUserTreasuries</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/team">Team</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/team">Team</a> - This resource was deprecated in v2.
   * <a href="https://www.etsy.com/developers/documentation/reference/team#method_findallteams">findAllTeams</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/team#method_findteams">findTeams</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/team#method_findallteamsforuser">findAllTeamsForUser</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/datatype">DataType</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/datatype">DataType</a> - Enum definitions are generated dynamically in v3 documentation.
   * <a href="https://www.etsy.com/developers/documentation/reference/datatype#method_describeoccasionenum">describeOccasionEnum</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/datatype#method_describerecipientenum">describeRecipientEnum</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/datatype#method_describewhenmadeenum">describeWhenMadeEnum</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/datatype#method_describewhomadeenum">describeWhoMadeEnum</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/ledger">Ledger</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/ledger">Ledger</a> - You can retrieve a shop's ledger_id if needed using an endpoint that returns a PaymentAccountLedgerEntry.
   * <a href="https://www.etsy.com/developers/documentation/reference/ledger#method_findledger">findLedger</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/paramlist">ParamList</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/ledgerentry">LedgerEntry</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/paramlist">ParamList</a> - Parameter types are generated dynamically in v3 documentation.
+* <a href="https://www.etsy.com/developers/documentation/reference/ledgerentry">LedgerEntry</a> - Deprecated on etsy.com. Use PaymentAccountLedgerEntry.
   * <a href="https://www.etsy.com/developers/documentation/reference/ledgerentry#method_findledgerentries">findLedgerEntries</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/ledgerentry#method_findledgerentry">findLedgerEntry</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/feedbackinfo">FeedbackInfo</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/region">Region</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/region">Region</a> - ShippingProfileDestinations only support countries in v3.
   * <a href="https://www.etsy.com/developers/documentation/reference/region#method_findallregion">findAllRegion</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/region#method_getregion">getRegion</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/region#method_findeligibleregions">findEligibleRegions</a>
@@ -442,7 +486,7 @@ We are not planning to represent these v2 resources and associated endpoints in 
   * <a href="https://www.etsy.com/developers/documentation/reference/guest#method_generateguest">generateGuest</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/guest#method_claimguest">claimGuest</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/guest#method_mergeguest">mergeGuest</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/featuredtreasury">FeaturedTreasury</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/featuredtreasury">FeaturedTreasury</a> - This resource was deprecated in v2.
   * <a href="https://www.etsy.com/developers/documentation/reference/featuredtreasury#method_findallfeaturedtreasuries">findAllFeaturedTreasuries</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/featuredtreasury#method_getfeaturedtreasurybyid">getFeaturedTreasuryById</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/featuredtreasury#method_findallfeaturedtreasuriesbyowner">findAllFeaturedTreasuriesByOwner</a>
@@ -451,7 +495,7 @@ We are not planning to represent these v2 resources and associated endpoints in 
   * <a href="https://www.etsy.com/developers/documentation/reference/country#method_findallcountry">findAllCountry</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/country#method_getcountry">getCountry</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/country#method_findbyisocode">findByIsoCode</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/billingoverview">BillingOverview</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/billingoverview">BillingOverview</a> - This resource was deprecated in v2.
   * <a href="https://www.etsy.com/developers/documentation/reference/billingoverview#method_getuserbillingoverview">getUserBillingOverview</a>
 * <a href="https://www.etsy.com/developers/documentation/reference/shippingoption">ShippingOption</a>
 * <a href="https://www.etsy.com/developers/documentation/reference/paymenttemplate">PaymentTemplate</a> - Deprecated on etsy.com
@@ -461,7 +505,7 @@ We are not planning to represent these v2 resources and associated endpoints in 
   * <a href="https://www.etsy.com/developers/documentation/reference/paymenttemplate#method_findalluserpaymenttemplates">findAllUserPaymentTemplates</a>
 * <a href="https://www.etsy.com/developers/documentation/reference/shopabout">ShopAbout</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/shopabout#method_getshopabout">getShopAbout</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/forumpost">ForumPost</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/forumpost">ForumPost</a> - This resource was deprecated in v2.
   * <a href="https://www.etsy.com/developers/documentation/reference/forumpost#method_findtreasurycomments">findTreasuryComments</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/forumpost#method_posttreasurycomment">postTreasuryComment</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/forumpost#method_deletetreasurycomment">deleteTreasuryComment</a>
@@ -476,7 +520,7 @@ We are not planning to represent these v2 resources and associated endpoints in 
 * <a href="https://www.etsy.com/developers/documentation/reference/avatar">Avatar</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/avatar#method_uploadavatar">uploadAvatar</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/avatar#method_getavatarimgsrc">getAvatarImgSrc</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/apimethod">ApiMethod</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/apimethod">ApiMethod</a> - This resource was deprecated in v2.
   * <a href="https://www.etsy.com/developers/documentation/reference/apimethod#method_getmethodtable">getMethodTable</a>
 * <a href="https://www.etsy.com/developers/documentation/reference/shopaboutmember">ShopAboutMember</a>
 * <a href="https://www.etsy.com/developers/documentation/reference/shoptranslation">ShopTranslation</a>
@@ -484,7 +528,7 @@ We are not planning to represent these v2 resources and associated endpoints in 
   * <a href="https://www.etsy.com/developers/documentation/reference/shoptranslation#method_createshoptranslation">createShopTranslation</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/shoptranslation#method_updateshoptranslation">updateShopTranslation</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/shoptranslation#method_deleteshoptranslation">deleteShopTranslation</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/treasurycounts">TreasuryCounts</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/treasurycounts">TreasuryCounts</a> - This resource was deprecated in v2.
 * <a href="https://www.etsy.com/developers/documentation/reference/paymentadjustmentitem">PaymentAdjustmentItem</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/paymentadjustmentitem#method_findpaymentadjustmentitems">findPaymentAdjustmentItems</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/paymentadjustmentitem#method_findpaymentadjustmentitem">findPaymentAdjustmentItem</a>
@@ -492,7 +536,7 @@ We are not planning to represent these v2 resources and associated endpoints in 
 * <a href="https://www.etsy.com/developers/documentation/reference/billcharge">BillCharge</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/billcharge#method_getuserchargesmetadata">getUserChargesMetadata</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/billcharge#method_findallusercharges">findAllUserCharges</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/treasurylisting">TreasuryListing</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/treasurylisting">TreasuryListing</a> - This resource was deprecated in v2.
   * <a href="https://www.etsy.com/developers/documentation/reference/treasurylisting#method_addtreasurylisting">addTreasuryListing</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/treasurylisting#method_removetreasurylisting">removeTreasuryListing</a>
 * <a href="https://www.etsy.com/developers/documentation/reference/billpayment">BillPayment</a>
@@ -505,11 +549,12 @@ We are not planning to represent these v2 resources and associated endpoints in 
   * <a href="https://www.etsy.com/developers/documentation/reference/guestcart#method_findguestcart">findGuestCart</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/guestcart#method_updateguestcart">updateGuestCart</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/guestcart#method_deleteguestcart">deleteGuestCart</a>
-* <a href="https://www.etsy.com/developers/documentation/reference/treasurylistingdata">TreasuryListingData</a>
+* <a href="https://www.etsy.com/developers/documentation/reference/treasurylistingdata">TreasuryListingData</a> - This resource was deprecated in v2.
 * <a href="https://www.etsy.com/developers/documentation/reference/shippinginfo">ShippingInfo</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/shippinginfo#method_createshippinginfo">createShippingInfo</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/shippinginfo#method_getshippinginfo">getShippingInfo</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/shippinginfo#method_updateshippinginfo">updateShippingInfo</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/shippinginfo#method_deleteshippinginfo">deleteShippingInfo</a>
+  * <a href="https://www.etsy.com/developers/documentation/reference/shippinginfo#method_findalllistingshippingprofileentries">findAllListingShippingProfileEntries</a> - ShippingProfileEntries are now accessed through ShippingProfiles. Use getListingShippingProfileDestinationsByShippingProfile.
 * <a href="https://www.etsy.com/developers/documentation/reference/imagetype">ImageType</a>
   * <a href="https://www.etsy.com/developers/documentation/reference/imagetype#method_listimagetypes">listImageTypes</a>
