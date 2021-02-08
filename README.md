@@ -16,11 +16,11 @@ We’ve spent a lot of time poring over data and charts, but we recognize that o
 
 ## What kind of feedback are we looking for?
 
-We’d love to hear about feature requests and bug reports on endpoints and documentation. If you see something you relied on in API v2 that is missing in API v3, please [let us know](https://github.com/etsy/open-api/issues/new/choose). If you have problems that are specific to your integration, you’ll get help faster by reaching out to developers@etsy.com.
+We’d love to hear about feature requests, proposed endpoint schema changes, bug reports, and any documentation issues. If you’d like to suggest a change or leave general feedback, please [let us know](https://github.com/etsy/open-api/issues/new/choose).
 
 ## What you’ll find here
 
-We’re publishing early drafts of documentation here for your feedback—we’ll make adjustments based on what we hear from you to make it as useful as possible. You’ll find our [OpenAPI Specification](https://swagger.io/specification/) (OAS) file that defines the interface for our API and powers our reference documentation site. You’ll also find Markdown files that will be published to our new documentation hub, which is launching in the coming months.
+We’re publishing early drafts of documentation here for your feedback—we’ll make adjustments based on what we hear from you to make it as useful as possible. You’ll find our [OpenAPI Specification](http://spec.openapis.org/oas/v3.0.3) (OAS) file that defines the interface for our API and powers our reference documentation site. You’ll also find Markdown files that will be published to our new documentation hub, which is launching in the coming months.
 
 ## Community guidelines
 
