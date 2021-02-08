@@ -6,7 +6,7 @@ Etsy is a global marketplace for unique and creative goods. We’re driven by ou
 
 We’re working on a new version of our Open API. For several months, we’ve been building a new foundation for updated endpoints and drafting new documentation. The goal of this work is to meet the needs of Etsy’s developer community and make it easier for our team to quickly make updates to the Open API when those needs change.
 
-  
+
 
 We’ve built over 60 endpoints that are ready for your feedback. Open API v3 is focused on three main use cases—listing management, post-purchase order management, and shop management. You can explore these new endpoints, including request and response schemas, on our new [API Reference](https://www.etsy.com/openapi/developers) site.
 
@@ -30,22 +30,22 @@ We’ve also included Etsy’s Open Source [Code of Conduct](https://etsy.github
 
 We’ve built several [issue templates](https://github.com/etsy/open-api/issues/new/choose) to make it easier for you to provide feedback. Generally, bugs and feature requests for API v3 or docs should be Github issues. Everything else should go to [developers@etsy.com](mailto:developers@etsy.com).
 
-  
+
 
 We also tried to make it easy to provide feedback directly from our API reference docs. Each endpoint definition includes a link to file a bug or feature request with some details filled in.
 
-  
+
 
 Finally, we’d love it if you submitted pull requests on our Markdown files. Everyone who contributes to the v3 rollout will get a shoutout when we launch.
 
 ## Need access to endpoints? Want to provide detailed feedback?
 
-If you’d like to make requests to our Open API v3 endpoints, fill out this form.
+If you’d like to make requests to our Open API v3 endpoints, [fill out this form](https://docs.google.com/forms/d/e/1FAIpQLSc4qzVlgjkzEkaQvpgX00xvJLjlomRoS-60G9ob_FqCfmbCrA/viewform?usp=sf_link).
 
-  
 
-If you’d like to participate in user feedback sessions with Etsy’s research team, fill out this form.
 
-  
+If you’d like to participate in user feedback sessions with Etsy’s research team, [fill out this form](https://docs.google.com/forms/d/e/1FAIpQLSdSzNrZxDCv1KHlvQfrNIJ9sNzYfivn_cgHA9rDkFMBZ08Kaw/viewform?usp=sf_link).
+
+
 
 (c) 2011-2021 Etsy, Inc. All Rights Reserved. Use of this code is subject to Etsy's API Developer Terms of Use, available at [https://www.etsy.com/legal/api](https://www.etsy.com/legal/api)
