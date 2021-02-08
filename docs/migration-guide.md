@@ -57,7 +57,13 @@ We’ll be communicating often over the course of 2021 about updates, upcoming m
 
 ### How can I provide feedback on the API?
 
-If you’d like to report an issue or provide feedback on the API design or documentation, please [open an issue in Github](https://github.com/etsy/open-api/issues/new/choose).
+If you’d like to report an issue or provide feedback on the API design or documentation, please [open an issue in Github](https://github.com/etsy/open-api/issues/new/choose). Note that by submitting your feedback, we have the right to use it.
+
+Legalese-wise, this means it’s considered non-confidential and non-proprietary to you, and you grant Etsy a non-exclusive, worldwide, royalty-free, irrevocable, sub-licensable, perpetual license to use and publish those ideas and materials for any purpose, without compensation to you.
+
+### Is the OpenAPI open source?
+
+Etsy’s OpenAPI is not open source, but we do want you to have access to the API design and documentation, and we welcome your feedback. Use of the API is subject to Etsy’s [API Terms of Use](https://www.etsy.com/legal/api), along with Etsy’s primary [Terms of Use](https://www.etsy.com/legal/terms-of-use/), [Privacy Policy](https://www.etsy.com/legal/privacy/), and other applicable House Rules.
 
 ## Summary of Changes
 
