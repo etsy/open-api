@@ -30,14 +30,13 @@ We’ve also included Etsy’s Open Source [Code of Conduct](https://etsy.github
 
 We’ve built several [issue templates](https://github.com/etsy/open-api/issues/new/choose) to make it easier for you to provide feedback. Generally, bugs and feature requests for API v3 or docs should be Github issues. Everything else should go to [developers@etsy.com](mailto:developers@etsy.com).
 
-
-
 We also tried to make it easy to provide feedback directly from our API reference docs. Each endpoint definition includes a link to file a bug or feature request with some details filled in.
-
-
 
 Finally, we’d love it if you submitted pull requests on our Markdown files. Everyone who contributes to the v3 rollout will get a shoutout when we launch.
 
+Note that by submitting your feedback, we have the right to use it.
+
+Legalese-wise, this means it’s considered non-confidential and non-proprietary to you, and you grant Etsy a non-exclusive, worldwide, royalty-free, irrevocable, sub-licensable, perpetual license to use and publish those ideas and materials for any purpose, without compensation to you.
 ## Need access to endpoints? Want to provide detailed feedback?
 
 If you’d like to make requests to our Open API v3 endpoints, [fill out this form](https://docs.google.com/forms/d/e/1FAIpQLSc4qzVlgjkzEkaQvpgX00xvJLjlomRoS-60G9ob_FqCfmbCrA/viewform?usp=sf_link).
