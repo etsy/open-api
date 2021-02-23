@@ -53,7 +53,7 @@ There’s a lot of helpful documentation available to you, including the [refere
 
 ### Are there any changes to API Rate Limits?
 
- **API rate limits in v3 are the same as v2.** Using public (API key-based) authentication, clients are allowed 10,000 requests per 24-hour period, with a limit of 10 queries per second. For more information on rate limits, see [here](https://www.etsy.com/developers/documentation/getting_started/api_basics#section_rate_limiting). 
+ **API rate limits in v3 are the same as v2. Similarly, negotiated rate limits from v2 will remain the same in v3 if you're using the same API Key as v2.** By default, using public (API key-based) authentication, clients are allowed 10,000 requests per 24-hour period, with a limit of 10 queries per second.  For more information on rate limits, see [here](https://www.etsy.com/developers/documentation/getting_started/api_basics#section_rate_limiting). 
 
 ### How can I stay informed of changes to the API?
 
