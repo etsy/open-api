@@ -51,6 +51,10 @@ We’ll give you ample time, notice, and support to migrate your app to the new 
 
 There’s a lot of helpful documentation available to you, including the [reference docs](https://www.etsy.com/openapi/developers) and this migration guide. If you have a suggestion for something you’d like to see in our new API or documentation, you can [open an issue on Github](https://github.com/etsy/open-api/issues/new/choose). If you suspect you’ve found a bug or are having trouble with your migration, you can contact us at [developers@etsy.com](mailto:developers@etsy.com).
 
+### Are there any changes to API Rate Limits?
+
+The API rate limits in v3 are the same as v2. For more information on rate limits, see [here](https://www.etsy.com/developers/documentation/getting_started/api_basics#section_rate_limiting). 
+
 ### How can I stay informed of changes to the API?
 
 We’ll be communicating often over the course of 2021 about updates, upcoming milestones, and new ways to give feedback and get involved. Make sure that the [contact information](https://www.etsy.com/your/account) on the Etsy account that owns your API application is up-to-date, and that you subscribe to the [Etsy API Google Group](https://groups.google.com/g/etsy-api-v2).
