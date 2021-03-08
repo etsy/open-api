@@ -2,7 +2,7 @@
     "openapi": "3.0.2",
     "info": {
         "title": "Etsy OpenAPI",
-        "description": "<div class=\"wt-text-body-01\"><p class=\"wt-pt-xs-2 wt-pb-xs-2\">Etsy's Open API provides a simple RESTful interface for various Etsy.com features. The API reference documents endpoints are meant to replace <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://www.etsy.com/developers/documentation\">Etsy's current Open API</a> this year. Use of the API is subject to the <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://www.etsy.com/legal/api\">API Terms of Use</a>.</p><p class=\"wt-pb-xs-2\">The API is currently in an experimental, alpha phase meant to validate feature and functionality requirements. During this phase, endpoints may have significant design changes but developers will have an opportunity to preview endpoints and provide feedback that will help shape Etsy's Open API functionality. The alpha API design is not stable and will likely change in response to feedback but we'll communicate changes as they are made.</p><p class=\"wt-pb-xs-2\">All of the endpoints are callable, but many endpoints are currently interface stubs and will return a \"501 Not Implemented\" response code when called; the documentation for each of these stub endpoints includes an alert calling this out.</p><p class=\"wt-pb-xs-2\">If you'd like to report an issue or provide feedback on the API design, <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://github.com/etsy/open-api/issues/new/choose\">please add an issue in Github</a>. You grant us a license to use your feedback as described in Etsy's primary <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://www.etsy.com/legal/terms-of-use\">Terms of Use.</a></p><p class=\"wt-pb-xs-2\">If you would like to make requests to the Open API v3 endpoints, please contact <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"mailto:developers@etsy.com\">developers@etsy.com</a> and provide your API key and an OAuth2 callback URL for authentication.</p></div>&copy; 2021 Etsy, Inc. All Rights Reserved. Use of this code is subject to Etsy's <a class='wt-text-link wt-p-xs-0' target='_blank' href='https://www.etsy.com/legal/api'>API Developer Terms of Use</a>.",
+        "description": "<div class=\"wt-text-body-01\"><p class=\"wt-pt-xs-2 wt-pb-xs-2\">Etsy's Open API provides a simple RESTful interface for various Etsy.com features. The API reference documents endpoints are meant to replace <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://www.etsy.com/developers/documentation\">Etsy's current Open API</a> this year. Use of the API is subject to the <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://www.etsy.com/legal/api\">API Terms of Use</a>.</p><p class=\"wt-pb-xs-5 wt-text-title-01\">If you would like to make requests to the Open API v3 endpoints, please fill out <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://docs.google.com/forms/d/e/1FAIpQLSc4qzVlgjkzEkaQvpgX00xvJLjlomRoS-60G9ob_FqCfmbCrA/viewform\">the intake form</a>.</p><p class=\"wt-pb-xs-2\">The API is currently in an experimental, alpha phase meant to validate feature and functionality requirements. During this phase, endpoints may have significant design changes but developers will have an opportunity to preview endpoints and provide feedback that will help shape Etsy's Open API functionality. The alpha API design is not stable and will likely change in response to feedback but we'll communicate changes as they are made.</p><p class=\"wt-pb-xs-2\">All of the endpoints are callable, but many endpoints are currently interface stubs and will return a \"501 Not Implemented\" response code when called; the documentation for each of these stub endpoints includes an alert calling this out.</p><p class=\"wt-pb-xs-2\">If you'd like to report an issue or provide feedback on the API design, <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://github.com/etsy/open-api/issues/new/choose\">please add an issue in Github</a>. You grant us a license to use your feedback as described in Etsy's primary <a target=\"_blank\" class=\"wt-text-link wt-p-xs-0\" href=\"https://www.etsy.com/legal/terms-of-use\">Terms of Use.</a></p></div>&copy; 2021 Etsy, Inc. All Rights Reserved. Use of this code is subject to Etsy's <a class='wt-text-link wt-p-xs-0' target='_blank' href='https://www.etsy.com/legal/api'>API Developer Terms of Use</a>.",
         "termsOfService": "https://www.etsy.com/legal/api",
         "contact": {
             "email": "developers@etsy.com"
@@ -48,6 +48,9 @@
             "name": "Shop Section"
         },
         {
+            "name": "SellerTaxonomy"
+        },
+        {
             "name": "Shop Receipt"
         },
         {
@@ -79,19 +82,13 @@
         },
         {
             "name": "ShopListing File"
-        },
-        {
-            "name": "Country"
         }
     ],
     "x-tagGroups": [
         {
-            "name": "Country Management",
-            "tags": ["Country"]
-        },
-        {
             "name": "Listing Management",
             "tags": [
+                "SellerTaxonomy",
                 "ShopListing",
                 "ShopListing File",
                 "ShopListing Image",
@@ -121,90 +118,10 @@
         }
     ],
     "paths": {
-        "/v3/public/openapi/countries/{country_id}": {
-            "get": {
-                "operationId": "getCountry",
-                "description": "Open API V3 to retrieve a country by ID.",
-                "tags": ["Country"],
-                "parameters": [
-                    {
-                        "name": "country_id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A single Country",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Country"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "A resource could not be found. See the error message for details.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorSchema"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "The server encountered an internal error. See the error message for details.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorSchema"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v3/public/openapi/countries": {
-            "get": {
-                "operationId": "getCountries",
-                "description": "OpenAPI V3 endpoint to find all countries.",
-                "tags": ["Country"],
-                "responses": {
-                    "200": {
-                        "description": "A list of Countries",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Countries"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "The server encountered an internal error. See the error message for details.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorSchema"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v3/application/feedback": {
             "get": {
                 "operationId": "getPublicUserFeedback",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to retrieve UserFeedback written by or received by a User.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to retrieve UserFeedback written by or received by a User.",
                 "tags": ["UserFeedback"],
                 "parameters": [
                     {
@@ -266,6 +183,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -288,7 +215,7 @@
         "/v3/application/listings": {
             "post": {
                 "operationId": "createListing",
-                "description": "Creates a new listing",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nCreates a new listing",
                 "tags": ["ShopListing"],
                 "requestBody": {
                     "content": {
@@ -356,8 +283,8 @@
                                     },
                                     "type": {
                                         "type": "string",
-                                        "enum": ["physical", "download"],
-                                        "default": 0
+                                        "enum": ["physical", "download", "both"],
+                                        "default": "physical"
                                     },
                                     "materials": {
                                         "type": "array",
@@ -512,7 +439,15 @@
                                         }
                                     },
                                     "state": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive",
+                                            "removed",
+                                            "draft",
+                                            "expired",
+                                            "sold_out"
+                                        ]
                                     },
                                     "channels": {
                                         "type": "array",
@@ -610,17 +545,17 @@
             },
             "get": {
                 "operationId": "getListings",
-                "description": "Endpoint to list Listings that belong to a Shop. Listings can be filtered using the 'state' param.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nEndpoint to list Listings that belong to a Shop. Listings can be filtered using the 'state' param.",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
                         "name": "state",
                         "in": "query",
-                        "description": "listing_state",
+                        "description": "One of active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "listing_state",
+                            "description": "One of active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
                             "enum": [
                                 "active",
                                 "inactive",
@@ -634,11 +569,11 @@
                     {
                         "name": "limit",
                         "in": "query",
-                        "description": "limit",
+                        "description": "A limit on the number of results to be returned.",
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "description": "limit",
+                            "description": "A limit on the number of results to be returned.",
                             "minimum": 1,
                             "maximum": 100,
                             "default": 25
@@ -647,11 +582,11 @@
                     {
                         "name": "offset",
                         "in": "query",
-                        "description": "offset",
+                        "description": "The number of items to skip before starting to collect the result set.",
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "description": "offset",
+                            "description": "The number of items to skip before starting to collect the result set.",
                             "minimum": 0,
                             "default": 0
                         }
@@ -659,11 +594,11 @@
                     {
                         "name": "sort_on",
                         "in": "query",
-                        "description": "listing_sort_on",
+                        "description": "The value to sort a search result of listings on. NOTE: sort_on only works when combined with one of the search options (keywords, region, etc.). ",
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "description": "listing_sort_on",
+                            "description": "The value to sort a search result of listings on. NOTE: sort_on only works when combined with one of the search options (keywords, region, etc.). ",
                             "enum": ["created", "price", "score"],
                             "default": "created"
                         }
@@ -671,11 +606,11 @@
                     {
                         "name": "sort_order",
                         "in": "query",
-                        "description": "listing_sort_order",
+                        "description": "The ascending(up) or descending(down) order to sort listings by. NOTE: sort_order only works when combined with one of the search options (keywords, region, etc.).",
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "description": "listing_sort_order",
+                            "description": "The ascending(up) or descending(down) order to sort listings by. NOTE: sort_order only works when combined with one of the search options (keywords, region, etc.).",
                             "enum": [
                                 "asc",
                                 "ascending",
@@ -684,7 +619,7 @@
                                 "up",
                                 "down"
                             ],
-                            "default": "DESC"
+                            "default": "desc"
                         }
                     }
                 ],
@@ -741,7 +676,7 @@
         "/v3/application/listings/{listing_id}": {
             "delete": {
                 "operationId": "deleteListing",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to delete a ShopListing.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to delete a ShopListing.",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
@@ -787,6 +722,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -807,7 +752,7 @@
             },
             "get": {
                 "operationId": "getListing",
-                "description": "Get a listing",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet a listing",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
@@ -857,7 +802,7 @@
             },
             "put": {
                 "operationId": "updateListing",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nUpdates a ShopListing.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nUpdates a ShopListing.",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
@@ -1064,8 +1009,8 @@
                                     "type": {
                                         "type": "string",
                                         "description": "Indicates whether the listing is physical or a digital download.",
-                                        "enum": ["physical", "download"],
-                                        "default": 0
+                                        "enum": ["physical", "download", "both"],
+                                        "default": "physical"
                                     },
                                     "state": {
                                         "type": "string",
@@ -1078,7 +1023,7 @@
                                             "expired",
                                             "sold_out"
                                         ],
-                                        "default": 0
+                                        "default": "active"
                                     },
                                     "channels": {
                                         "type": "array",
@@ -1092,7 +1037,7 @@
                                                 "sell_on_facebook"
                                             ]
                                         },
-                                        "default": ["etsy.com"]
+                                        "default": "etsy.com"
                                     }
                                 }
                             }
@@ -1140,6 +1085,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -1162,7 +1117,7 @@
         "/v3/application/listings/{listing_id}/files/{listing_file_id}": {
             "delete": {
                 "operationId": "deleteListingFile",
-                "description": "Deletes a ShopListingFile from the given ShopListing. If the ShopListingFile being deleted is the last ShopListingFile for a digital ShopListing, the ShopListing will be converted to a physical ShopListing. Returns the remaining ShopListingFile records associated with the given ShopListing.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nDeletes a ShopListingFile from the given ShopListing. If the ShopListingFile being deleted is the last ShopListingFile for a digital ShopListing, the ShopListing will be converted to a physical ShopListing. Returns the remaining ShopListingFile records associated with the given ShopListing.",
                 "tags": ["ShopListing File"],
                 "parameters": [
                     {
@@ -1239,7 +1194,7 @@
             },
             "get": {
                 "operationId": "getListingFile",
-                "description": "Get a single ShopListingFile associated with the given digital ShopListing. The endpoint will return an empty result set for physical ShopListing records.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet a single ShopListingFile associated with the given digital ShopListing. The endpoint will return an empty result set for physical ShopListing records.",
                 "tags": ["ShopListing File"],
                 "parameters": [
                     {
@@ -1308,7 +1263,7 @@
         "/v3/application/listings/{listing_id}/files": {
             "get": {
                 "operationId": "getAllListingFiles",
-                "description": "Get all ShopListingFile records for the given digital ShopListing. This endpoint will return an empty result set for physical ShopListing records.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet all ShopListingFile records for the given digital ShopListing. This endpoint will return an empty result set for physical ShopListing records.",
                 "tags": ["ShopListing File"],
                 "parameters": [
                     {
@@ -1364,7 +1319,7 @@
             },
             "post": {
                 "operationId": "uploadListingFile",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nUpload a new ListingFile, or attach an existing file to the given ShopListing. You must either provide the listing_file_id of an existing ListingFile, or the name and file data of a new ListingFile that you are uploading. If you are attaching a ListingFile to a physical ShopListing, the ShopListing will be converted to a digital ShopListing. This will cause the ShopListing to have free shipping and will remove any variations.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nUpload a new ListingFile, or attach an existing file to the given ShopListing. You must either provide the listing_file_id of an existing ListingFile, or the name and file data of a new ListingFile that you are uploading. If you are attaching a ListingFile to a physical ShopListing, the ShopListing will be converted to a digital ShopListing. This will cause the ShopListing to have free shipping and will remove any variations.",
                 "tags": ["ShopListing File"],
                 "parameters": [
                     {
@@ -1463,7 +1418,7 @@
         "/v3/application/listings/active": {
             "get": {
                 "operationId": "findAllListingsActive",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nA list of all active listings on Etsy paginated by their creation date. Without sort_order listings will be returned newest-first by default.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nA list of all active listings on Etsy paginated by their creation date. Without sort_order listings will be returned newest-first by default.",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
@@ -1530,7 +1485,7 @@
                                 "up",
                                 "down"
                             ],
-                            "default": "descending"
+                            "default": "desc"
                         }
                     },
                     {
@@ -1663,6 +1618,114 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "The server encountered an internal error. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v3/application/shop/{shop_id}/listings/active": {
+            "get": {
+                "operationId": "findAllActiveListingsByShop",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nA list of all active listings on Etsy paginated by their creation date.",
+                "tags": ["ShopListing"],
+                "parameters": [
+                    {
+                        "name": "shop_id",
+                        "in": "path",
+                        "description": "The unique ID of an Etsy Shop.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique ID of an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "A limit on the number of results to be returned.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "A limit on the number of results to be returned.",
+                            "minimum": 1,
+                            "maximum": 100,
+                            "default": 25
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The number of items to skip before starting to collect the result set.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The number of items to skip before starting to collect the result set.",
+                            "minimum": 0,
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "Search term or phrase to use to narrow down a set of results for a resource",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Search term or phrase to use to narrow down a set of results for a resource",
+                            "default": null
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of all active listings on Etsy paginated by their creation date.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShopListings"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A resource could not be found. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -1679,7 +1742,7 @@
         "/v3/application/listings/{listing_id}/images/{listing_image_id}": {
             "delete": {
                 "operationId": "deleteListingImage",
-                "description": "Open API V3 endpoint to delete a listing image. A copy of the file remains on our servers, and so a deleted image may be re-associated with the listing without re-uploading the original image; see uploadListingImage.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 endpoint to delete a listing image. A copy of the file remains on our servers, and so a deleted image may be re-associated with the listing without re-uploading the original image; see uploadListingImage.",
                 "tags": ["ShopListing Image"],
                 "parameters": [
                     {
@@ -1768,7 +1831,7 @@
         "/v3/application/openapi/listings/{listing_id}/images/{listing_image_id}": {
             "get": {
                 "operationId": "getListingImage",
-                "description": "Retrieves a ListingImage resource by ID.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nRetrieves a ListingImage resource by ID.",
                 "tags": ["ShopListing Image"],
                 "parameters": [
                     {
@@ -1831,7 +1894,7 @@
         "/v3/application/openapi/listings/{listing_id}/images": {
             "get": {
                 "operationId": "getListingImages",
-                "description": "Retrieves all ListingImage resources for Listing.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nRetrieves all ListingImage resources for Listing.",
                 "tags": ["ShopListing Image"],
                 "parameters": [
                     {
@@ -1883,7 +1946,7 @@
         "/v3/application/listings/{listing_id}/images": {
             "post": {
                 "operationId": "uploadListingImage",
-                "description": "Uploads a ListingImage.\n\nA new ListingImage can be uploaded via the image param. A previously deleted ListingImage can be re-associated with a Listing via the listing_image_id param. Only one param should be included per request; if both are present in the request, the endpoint will upload the provided image.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nUploads a ListingImage.\\n\\nA new ListingImage can be uploaded via the image param. A previously deleted ListingImage can be re-associated with a Listing via the listing_image_id param. Only one param should be included per request; if both are present in the request, the endpoint will upload the provided image.",
                 "tags": ["ShopListing Image"],
                 "parameters": [
                     {
@@ -2008,7 +2071,7 @@
         "/v3/application/listings/{listing_id}/inventory": {
             "get": {
                 "operationId": "getListingInventory",
-                "description": "Get the inventory for a listing. When a listing has not been edited using the Etsy.com inventory tools, it will have no inventory records. This endpoint returns SKU data if you're the owner of the inventory records being fetched.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet the inventory for a listing. When a listing has not been edited using the Etsy.com inventory tools, it will have no inventory records. This endpoint returns SKU data if you're the owner of the inventory records being fetched.",
                 "tags": ["ShopListing Inventory"],
                 "parameters": [
                     {
@@ -2063,7 +2126,7 @@
             },
             "put": {
                 "operationId": "updateListingInventory",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nUpdate the inventory for a listing. The update will fail if the supplied values for product sku and offering quantity and price are incompatible with the supplied values of the 'on_property_*' fields. When supplying a price, supply a float equivalent to amount divided by divisor as specified in the Money resource.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nUpdate the inventory for a listing. The update will fail if the supplied values for product sku and offering quantity and price are incompatible with the supplied values of the 'on_property_*' fields. When supplying a price, supply a float equivalent to amount divided by divisor as specified in the Money resource.",
                 "tags": ["ShopListing Inventory"],
                 "parameters": [
                     {
@@ -2089,7 +2152,65 @@
                                         "type": "array",
                                         "description": "Should be a JSON array of products, even if you only send a single product. All field names in the JSON blob should be lowercase.",
                                         "items": {
-                                            "$ref": "#/components/schemas/ListingProduct"
+                                            "type": "object",
+                                            "properties": {
+                                                "sku": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "property_values": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "property_id": {
+                                                                "type": "integer",
+                                                                "minimum": 1
+                                                            },
+                                                            "value_ids": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "integer",
+                                                                    "minimum": 1
+                                                                }
+                                                            },
+                                                            "scale_id": {
+                                                                "type": "integer",
+                                                                "nullable": true,
+                                                                "minimum": 1
+                                                            },
+                                                            "property_name": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "values": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "offerings": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "price": {
+                                                                "type": "number",
+                                                                "format": "float"
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer"
+                                                            },
+                                                            "is_enabled": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     },
                                     "price_on_property": {
@@ -2181,7 +2302,7 @@
         "/v3/application/listings/{listing_id}/products/{product_id}": {
             "get": {
                 "operationId": "getListingProduct",
-                "description": "Open API V3 endpoint to retrieve a ListingProduct by ID.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 endpoint to retrieve a ListingProduct by ID.",
                 "tags": ["ShopListing Product"],
                 "parameters": [
                     {
@@ -2250,7 +2371,7 @@
         "/v3/application/listings/{listing_id}/products/{product_id}/offerings/{product_offering_id}": {
             "get": {
                 "operationId": "getListingOffering",
-                "description": "Get an Offering for a Listing",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet an Offering for a Listing",
                 "tags": ["ShopListing Offering"],
                 "parameters": [
                     {
@@ -2318,10 +2439,10 @@
                 }
             }
         },
-        "/v3/application/listings/{listing_id}/properties": {
+        "/v3/application/listings/{listing_id}/properties/{property_id}": {
             "get": {
-                "operationId": "getListingProperties",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nGet a listing's properties",
+                "operationId": "getListingProperty",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nRetrieves a listing's property",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
@@ -2334,15 +2455,26 @@
                             "description": "The unique ID of an Etsy Listing.",
                             "minimum": 1
                         }
+                    },
+                    {
+                        "name": "property_id",
+                        "in": "path",
+                        "description": "The unique ID of an Etsy ListingProperty.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique ID of an Etsy ListingProperty.",
+                            "minimum": 1
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "A Listing's Properties",
+                        "description": "A single ListingProperty.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ListingPropertyValues"
+                                    "$ref": "#/components/schemas/ListingPropertyValue"
                                 }
                             }
                         }
@@ -2378,12 +2510,10 @@
                         }
                     }
                 }
-            }
-        },
-        "/v3/application/listings/{listing_id}/properties/{property_id}": {
+            },
             "put": {
                 "operationId": "updateListingProperty",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nUpdate or populate properties for a Listing. Either values or value_ids is required.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nUpdate or populate properties for a Listing. Either values or value_ids is required.",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
@@ -2461,6 +2591,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -2480,10 +2620,72 @@
                 ]
             }
         },
+        "/v3/application/listings/{listing_id}/properties": {
+            "get": {
+                "operationId": "getListingProperties",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nGet a listing's properties",
+                "tags": ["ShopListing"],
+                "parameters": [
+                    {
+                        "name": "listing_id",
+                        "in": "path",
+                        "description": "The unique ID of an Etsy Listing.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique ID of an Etsy Listing.",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Listing's Properties",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListingPropertyValues"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A resource could not be found. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "The server encountered an internal error. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v3/application/listings/shipping-profiles": {
             "post": {
                 "operationId": "createListingShippingProfile",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nCreates a new ShippingProfile.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nCreates a new ShippingProfile. You can pass a country iso code or a region when creating a ShippingProfile, but not both.If you leave them both blank then the destination is assumed to be \"everywhere\". ",
                 "tags": ["ShopListing ShippingProfile"],
                 "requestBody": {
                     "content": {
@@ -2492,51 +2694,44 @@
                                 "type": "object",
                                 "required": [
                                     "title",
-                                    "origin_country_id",
+                                    "origin_country_iso",
                                     "primary_cost",
                                     "secondary_cost"
                                 ],
                                 "properties": {
                                     "title": {
-                                        "type": "string",
-                                        "description": "The name of this shipping profile."
+                                        "type": "string"
                                     },
-                                    "origin_country_id": {
-                                        "type": "integer",
-                                        "description": "The numeric ID of the country from which the listing ships.",
-                                        "minimum": 1
+                                    "origin_country_iso": {
+                                        "type": "string",
+                                        "format": "ISO 3166-1 alpha-2"
                                     },
                                     "primary_cost": {
                                         "type": "number",
-                                        "description": "The cost of shipping to this country/region alone.",
                                         "format": "float"
                                     },
                                     "secondary_cost": {
                                         "type": "number",
-                                        "description": "The cost of shipping to this country/region with another item.",
                                         "format": "float"
                                     },
-                                    "destination_country_id": {
-                                        "type": "integer",
-                                        "description": "The numeric ID of the country to which the listing ships.",
-                                        "minimum": 1,
+                                    "destination_country_iso": {
+                                        "type": "string",
+                                        "format": "ISO 3166-1 alpha-2",
                                         "default": null
                                     },
-                                    "destination_region_id": {
-                                        "type": "integer",
-                                        "description": "The numeric ID of the region to which the listing ships.",
-                                        "minimum": 1,
-                                        "default": null
+                                    "destination_region": {
+                                        "type": "string",
+                                        "description": "The code of the region to which the listing ships. A region represents a set of countries. Supported regions are Europe Union and Non-Europe Union (countries in Europe not in EU).",
+                                        "enum": ["eu", "non_eu", "none"],
+                                        "default": "none"
                                     },
                                     "min_processing_days": {
                                         "type": "integer",
-                                        "description": "The minimum number of days for processing the listing.",
                                         "minimum": 0,
                                         "default": null
                                     },
                                     "max_processing_days": {
                                         "type": "integer",
-                                        "description": "The maximum number of days for processing the listing.",
                                         "minimum": 0,
                                         "default": null
                                     }
@@ -2558,6 +2753,16 @@
                     },
                     "403": {
                         "description": "The request attempted to perform an operation it is not allowed to. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2588,7 +2793,7 @@
         "/v3/application/listings/shipping-profiles/{shipping_profile_id}": {
             "delete": {
                 "operationId": "deleteListingShippingProfile",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to delete a ShippingProfile by given id.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to delete a ShippingProfile by given id.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
@@ -2634,6 +2839,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -2654,7 +2869,7 @@
             },
             "get": {
                 "operationId": "getListingShippingProfile",
-                "description": "Open API V3 endpoint to retrieve a ListingShippingProfile by id.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 endpoint to retrieve a ListingShippingProfile by id.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
@@ -2720,7 +2935,7 @@
             },
             "put": {
                 "operationId": "updateListingShippingProfile",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to update a ShippingProfile.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to update a ShippingProfile.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
@@ -2745,10 +2960,10 @@
                                         "type": "string",
                                         "description": "The name of this shipping profile."
                                     },
-                                    "origin_country_id": {
-                                        "type": "integer",
-                                        "description": "The numeric ID of the country from which the listing ships.",
-                                        "minimum": 1
+                                    "origin_country_iso": {
+                                        "type": "string",
+                                        "description": "The ISO code of the country from which the listing ships.",
+                                        "format": "ISO 3166-1 alpha-2"
                                     },
                                     "min_processing_days": {
                                         "type": "integer",
@@ -2796,6 +3011,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -2818,7 +3043,7 @@
         "/v3/application/listings/shipping-profiles/destinations": {
             "post": {
                 "operationId": "createListingShippingProfileDestination",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nCreates a new ListingShippingProfileDestination.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nCreates a new ListingShippingProfileDestination.",
                 "tags": ["ShopListing ShippingProfile"],
                 "requestBody": {
                     "content": {
@@ -2846,11 +3071,17 @@
                                         "description": "The cost of shipping to this country/region with another item.",
                                         "format": "float"
                                     },
-                                    "destination_country_id": {
-                                        "type": "integer",
-                                        "description": "The numeric ID of the country to which the listing ships.",
-                                        "minimum": 1,
+                                    "destination_country_iso": {
+                                        "type": "string",
+                                        "description": "The ISO code of the country to which the listing ships.",
+                                        "format": "ISO 3166-1 alpha-2",
                                         "default": null
+                                    },
+                                    "destination_region": {
+                                        "type": "string",
+                                        "description": "The code of the region to which the listing ships. A region represents a set of countries. Supported regions are Europe Union and Non-Europe Union (countries in Europe not in EU).",
+                                        "enum": ["eu", "non_eu", "none"],
+                                        "default": "none"
                                     }
                                 }
                             }
@@ -2888,6 +3119,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -2910,7 +3151,7 @@
         "/v3/application/listings/shipping-profiles/destinations/{shipping_profile_destination_id}": {
             "delete": {
                 "operationId": "deleteListingShippingProfileDestination",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to delete a ListingShippingProfileDestination by the given id.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to delete a ListingShippingProfileDestination by the given id.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
@@ -2956,6 +3197,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -2976,7 +3227,7 @@
             },
             "put": {
                 "operationId": "updateListingShippingProfileDestination",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nUpdates an existing ListingShippingProfileDestination.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nUpdates an existing ListingShippingProfileDestination.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
@@ -3007,10 +3258,10 @@
                                         "description": "The cost of shipping to this country/region with another item.",
                                         "format": "float"
                                     },
-                                    "destination_country_id": {
-                                        "type": "integer",
-                                        "description": "The numeric ID of the country to which the listing ships.",
-                                        "minimum": 1,
+                                    "destination_country_iso": {
+                                        "type": "string",
+                                        "description": "The ISO code of the country to which the listing ships.",
+                                        "format": "ISO 3166-1 alpha-2",
                                         "default": null
                                     }
                                 }
@@ -3049,6 +3300,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -3071,7 +3332,7 @@
         "/v3/application/listings/shipping-profiles/{shipping_profile_id}/destinations": {
             "get": {
                 "operationId": "getListingShippingProfileDestinationsByShippingProfile",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to retrieve a set of ListingShippingProfileDestination objects associated to a ListingShippingProfile.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to retrieve a set of ListingShippingProfileDestination objects associated to a ListingShippingProfile.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
@@ -3117,13 +3378,23 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ListingShippingProfileEntries"
+                                    "$ref": "#/components/schemas/ListingShippingProfileDestinations"
                                 }
                             }
                         }
                     },
                     "403": {
                         "description": "The request attempted to perform an operation it is not allowed to. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3154,7 +3425,7 @@
         "/v3/application/shipping-profiles": {
             "get": {
                 "operationId": "getListingShippingProfiles",
-                "description": "Open API V3 endpoint to retrieve a set of ShippingProfile objects associated to a User.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 endpoint to retrieve a set of ShippingProfile objects associated to a User.",
                 "tags": ["ShopListing ShippingProfile"],
                 "responses": {
                     "200": {
@@ -3199,7 +3470,7 @@
         "/v3/application/listings/shipping-profiles/{shipping_profile_id}/upgrades": {
             "post": {
                 "operationId": "createListingShippingProfileUpgrade",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nCreates a new ListingShippingProfileUpgrade.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nCreates a new ListingShippingProfileUpgrade.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
@@ -3301,7 +3572,7 @@
             },
             "get": {
                 "operationId": "getListingShippingProfileUpgrades",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nRetrieve a set of ListingShippingProfileUpgrades associated to a ShippingProfile.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nRetrieve a set of ListingShippingProfileUpgrades associated to a ShippingProfile.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
@@ -3369,7 +3640,7 @@
         "/v3/application/listings/{listing_id}/transactions": {
             "get": {
                 "operationId": "getShopReceiptTransactionsByListing",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 to retrieve a set of ShopTransaction resources associated to a Listing.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 to retrieve a set of ShopTransaction resources associated to a Listing.",
                 "tags": ["Shop Receipt Transactions"],
                 "parameters": [
                     {
@@ -3472,7 +3743,7 @@
         "/v3/application/listings/{listing_id}/translations/{language}": {
             "post": {
                 "operationId": "createListingTranslation",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nCreates a ListingTranslation by listing_id and language",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nCreates a ListingTranslation by listing_id and language",
                 "tags": ["ShopListing Translation"],
                 "parameters": [
                     {
@@ -3584,7 +3855,7 @@
             },
             "get": {
                 "operationId": "getListingTranslation",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nGet a Translation for a Listing in the given language",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nGet a Translation for a Listing in the given language",
                 "tags": ["ShopListing Translation"],
                 "parameters": [
                     {
@@ -3664,7 +3935,7 @@
             },
             "put": {
                 "operationId": "updateListingTranslation",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nUpdates a ListingTranslation by listing_id and language",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nUpdates a ListingTranslation by listing_id and language",
                 "tags": ["ShopListing Translation"],
                 "parameters": [
                     {
@@ -3778,7 +4049,7 @@
         "/v3/application/listings/{listing_id}/variation-images": {
             "get": {
                 "operationId": "getListingVariationImages",
-                "description": "Gets all variation images on a listing.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGets all variation images on a listing.",
                 "tags": ["ShopListing VariationImage"],
                 "parameters": [
                     {
@@ -3828,7 +4099,7 @@
             },
             "post": {
                 "operationId": "updateVariationImages",
-                "description": "Creates variation images on a listing.\n\nvariation_images is an array with inputs for the property_id, value_id, and image_id fields. image_ids are associated with a ListingImage on the Listing associated with the provided listing_id. property_id and value_id pairs are associated with a ListingProduct on the Listing associated with the provided listing_id. variation_images does not contain any duplicates. variation_images does not contain more than one property_id as variation images can only be associated on one property. The update overwrites all existing variation images on a listing, so if your request is successful, the variation images on the listing will be exactly those you specify. ",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nCreates variation images on a listing.\\n\\nvariation_images is an array with inputs for the property_id, value_id, and image_id fields. image_ids are associated with a ListingImage on the Listing associated with the provided listing_id. property_id and value_id pairs are associated with a ListingProduct on the Listing associated with the provided listing_id. variation_images does not contain any duplicates. variation_images does not contain more than one property_id as variation images can only be associated on one property. The update overwrites all existing variation images on a listing, so if your request is successful, the variation images on the listing will be exactly those you specify. ",
                 "tags": ["ShopListing VariationImage"],
                 "parameters": [
                     {
@@ -3854,7 +4125,21 @@
                                         "type": "array",
                                         "description": "A list of variation image data.",
                                         "items": {
-                                            "$ref": "#/components/schemas/ListingVariationImage"
+                                            "type": "object",
+                                            "properties": {
+                                                "property_id": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                },
+                                                "value_id": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                },
+                                                "image_id": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -3935,39 +4220,39 @@
         "/v3/application/payment-account/ledger-entries": {
             "get": {
                 "operationId": "getShopPaymentAccountLedgerEntries",
-                "description": "Get a Shop Payment Account Ledger's Entries",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet a Shop Payment Account Ledger's Entries",
                 "tags": ["Ledger Entry"],
                 "parameters": [
                     {
                         "name": "min_created",
                         "in": "query",
-                        "description": "min_created",
+                        "description": "Minimum unix timestamp for when this resource was created.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "min_created",
+                            "description": "Minimum unix timestamp for when this resource was created.",
                             "minimum": 946684800
                         }
                     },
                     {
                         "name": "max_created",
                         "in": "query",
-                        "description": "max_created",
+                        "description": "Maximum unix timestamp for when this resource was created.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "max_created",
+                            "description": "Maximum unix timestamp for when this resource was created.",
                             "minimum": 946684800
                         }
                     },
                     {
                         "name": "limit",
                         "in": "query",
-                        "description": "limit",
+                        "description": "A limit on the number of results to be returned.",
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "description": "limit",
+                            "description": "A limit on the number of results to be returned.",
                             "minimum": 1,
                             "maximum": 100,
                             "default": 25
@@ -3976,11 +4261,11 @@
                     {
                         "name": "offset",
                         "in": "query",
-                        "description": "offset",
+                        "description": "The number of items to skip before starting to collect the result set.",
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "description": "offset",
+                            "description": "The number of items to skip before starting to collect the result set.",
                             "minimum": 0,
                             "default": 0
                         }
@@ -4039,7 +4324,7 @@
         "/v3/application/payment-account/ledger-entries/payments": {
             "get": {
                 "operationId": "getPaymentAccountLedgerEntryPayments",
-                "description": "Get a Payment from a PaymentAccount Ledger Entry ID, if applicable",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet a Payment from a PaymentAccount Ledger Entry ID, if applicable",
                 "tags": ["Payment"],
                 "parameters": [
                     {
@@ -4109,7 +4394,7 @@
         "/v3/application/receipts/{receipt_id}/payments": {
             "get": {
                 "operationId": "getShopPaymentByReceiptId",
-                "description": "Open API V3 to get a Payment by Shop Receipt ID",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to get a Payment by Shop Receipt ID",
                 "tags": ["Payment"],
                 "parameters": [
                     {
@@ -4176,7 +4461,7 @@
         "/v3/application/payments": {
             "get": {
                 "operationId": "getPayments",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nGet Payments by their IDs",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet Payments by their IDs",
                 "tags": ["Payment"],
                 "parameters": [
                     {
@@ -4225,16 +4510,6 @@
                             }
                         }
                     },
-                    "501": {
-                        "description": "This endpoint is not functional at this time.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorSchema"
-                                }
-                            }
-                        }
-                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -4257,7 +4532,7 @@
         "/v3/application/receipts/{receipt_id}": {
             "get": {
                 "operationId": "getShopReceipt",
-                "description": "Open API V3 endpoint to retreive a Receipt by id",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 endpoint to retreive a Receipt by id",
                 "tags": ["Shop Receipt"],
                 "parameters": [
                     {
@@ -4324,7 +4599,7 @@
         "/v3/application/receipts": {
             "get": {
                 "operationId": "getShopReceipts",
-                "description": "Open API V3 endpoint to find ShopReceipt for a given Shop",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 endpoint to find ShopReceipt for a given Shop",
                 "tags": ["Shop Receipt"],
                 "parameters": [
                     {
@@ -4407,8 +4682,7 @@
                         "required": false,
                         "schema": {
                             "type": "boolean",
-                            "description": "If true, the receipt has been paid.",
-                            "default": null
+                            "description": "If true, the receipt has been paid."
                         }
                     },
                     {
@@ -4418,8 +4692,7 @@
                         "required": false,
                         "schema": {
                             "type": "boolean",
-                            "description": "If true, the receipt has been shipped.",
-                            "default": null
+                            "description": "If true, the receipt has been shipped."
                         }
                     }
                 ],
@@ -4476,7 +4749,7 @@
         "/v3/application/receipts/{receipt_id}/tracking": {
             "post": {
                 "operationId": "createReceiptShipment",
-                "description": "Submit tracking information for a ShopReceipt. If send_bcc is true, the shipping notification will be sent to the seller as well. Each time you successfully submit tracking info, a notification email will be sent to the buyer User. If tracking_code and carrier_name aren't sent the receipt is marked as shipped only. Creates a ShopReceiptShipment for the given receipt_id. ",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nSubmit tracking information for a ShopReceipt. If send_bcc is true, the shipping notification will be sent to the seller as well. Each time you successfully submit tracking info, a notification email will be sent to the buyer User. If tracking_code and carrier_name aren't sent the receipt is marked as shipped only. Creates a ShopReceiptShipment for the given receipt_id. ",
                 "tags": ["Shop Receipt"],
                 "parameters": [
                     {
@@ -4577,7 +4850,7 @@
         "/v3/application/receipts/{receipt_id}/transactions": {
             "get": {
                 "operationId": "getShopReceiptTransactionsByReceipt",
-                "description": "Retrieves a set of ShopTransaction objects associated to a ShopReceipt.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nRetrieves a set of ShopTransaction objects associated to a ShopReceipt.",
                 "tags": ["Shop Receipt Transactions"],
                 "parameters": [
                     {
@@ -4642,10 +4915,101 @@
                 ]
             }
         },
+        "/v3/application/seller-taxonomy/nodes": {
+            "get": {
+                "operationId": "getSellerTaxonomyNodes",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nGet a list of SellerTaxonomyNodes",
+                "tags": ["SellerTaxonomy"],
+                "responses": {
+                    "200": {
+                        "description": "A set of SellerTaxonomyNode resources.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SellerTaxonomyNodes"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "The server encountered an internal error. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v3/application/seller-taxonomy/nodes/{taxonomy_id}/properties": {
+            "get": {
+                "operationId": "getPropertiesByTaxonomyId",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet a list of TaxonomyNodeProperty resources given a taxonomy node ID.",
+                "tags": ["SellerTaxonomy"],
+                "parameters": [
+                    {
+                        "name": "taxonomy_id",
+                        "in": "path",
+                        "description": "The unique ID of an Etsy TaxonomyNode.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique ID of an Etsy TaxonomyNode.",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of TaxonomyNodeProperty resources",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaxonomyNodeProperties"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A resource could not be found. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "The server encountered an internal error. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v3/application/shops/feedback": {
             "get": {
                 "operationId": "getShopUserFeedback",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to retrieve UserFeedback left for a Shop.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to retrieve UserFeedback left for a Shop.",
                 "tags": ["UserFeedback"],
                 "parameters": [
                     {
@@ -4695,6 +5059,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -4717,7 +5091,7 @@
         "/v3/application/shops/{shop_id}": {
             "get": {
                 "operationId": "getShop",
-                "description": "Open API V3 to retrieve a shop by ID.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to retrieve a shop by ID.",
                 "tags": ["Shop"],
                 "parameters": [
                     {
@@ -4766,7 +5140,7 @@
             },
             "put": {
                 "operationId": "updateShop",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 to update a shop by ID.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 to update a shop by ID.",
                 "tags": ["Shop"],
                 "parameters": [
                     {
@@ -4877,6 +5251,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -4899,7 +5283,7 @@
         "/v3/application/users/{user_id}/shops": {
             "get": {
                 "operationId": "getShopByOwnerUserId",
-                "description": "Open API V3 to retrieve the Shop associated to a User.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to retrieve the Shop associated to a User.",
                 "tags": ["Shop"],
                 "parameters": [
                     {
@@ -4951,7 +5335,7 @@
         "/v3/application/shops": {
             "get": {
                 "operationId": "getShops",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to find Shop resources. If there is a shop_name parameter, finds Shop resources with shop_name starting with this value.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to find Shop resources. If there is a shop_name parameter, finds Shop resources with shop_name starting with this value.",
                 "tags": ["Shop"],
                 "parameters": [
                     {
@@ -5001,6 +5385,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -5017,7 +5411,7 @@
         "/v3/application/shops/sections": {
             "post": {
                 "operationId": "createShopSection",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to create a new ShopSection.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to create a new ShopSection.",
                 "tags": ["Shop Section"],
                 "requestBody": {
                     "content": {
@@ -5087,7 +5481,7 @@
         "/v3/application/shops/{shop_id}/sections/{shop_section_id}": {
             "get": {
                 "operationId": "getShopSection",
-                "description": "Open API V3 to retrieve a ShopSection resource by id and shop_id.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to retrieve a ShopSection resource by id and shop_id.",
                 "tags": ["Shop Section"],
                 "parameters": [
                     {
@@ -5150,7 +5544,7 @@
         "/v3/application/shops/{shop_id}/sections": {
             "get": {
                 "operationId": "getShopSections",
-                "description": "Open API V3 to retrieve a set of ShopSection objects associated to a Shop.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to retrieve a set of ShopSection objects associated to a Shop.",
                 "tags": ["Shop Section"],
                 "parameters": [
                     {
@@ -5201,7 +5595,7 @@
         "/v3/application/shops/{shop_id}/sections/listings": {
             "get": {
                 "operationId": "getListingsByShopSectionId",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nFetch all Listings within a Shop's ShopSection.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nFetch all Listings within a Shop's ShopSection.",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
@@ -5281,7 +5675,7 @@
                                 "up",
                                 "down"
                             ],
-                            "default": "DESC"
+                            "default": "desc"
                         }
                     }
                 ],
@@ -5292,6 +5686,16 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ShopListings"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
                                 }
                             }
                         }
@@ -5312,7 +5716,7 @@
         "/v3/application/transactions/{transaction_id}": {
             "get": {
                 "operationId": "getShopReceiptTransaction",
-                "description": "Retrieves a ShopTransaction by id.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nRetrieves a ShopTransaction by id.",
                 "tags": ["Shop Receipt Transactions"],
                 "parameters": [
                     {
@@ -5380,7 +5784,7 @@
         "/v3/application/transactions": {
             "get": {
                 "operationId": "getShopReceiptTransactionsByShop",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 to retrieve a set of ShopTransaction resources associated to a Shop.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to retrieve a set of ShopTransaction resources associated to a Shop.",
                 "tags": ["Shop Receipt Transactions"],
                 "parameters": [
                     {
@@ -5440,6 +5844,54 @@
                             }
                         }
                     },
+                    "500": {
+                        "description": "The server encountered an internal error. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "oauth2": ["transactions_r"]
+                    }
+                ]
+            }
+        },
+        "/v3/application/user/addresses/{user_address_id}": {
+            "get": {
+                "operationId": "getUserAddress",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to retrieve a UserAddress for a User.",
+                "tags": ["UserAddress"],
+                "parameters": [
+                    {
+                        "name": "user_address_id",
+                        "in": "path",
+                        "description": "The numeric ID of the user's address.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The numeric ID of the user's address.",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single UserAddress",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserAddress"
+                                }
+                            }
+                        }
+                    },
                     "501": {
                         "description": "This endpoint is not functional at this time.",
                         "content": {
@@ -5464,7 +5916,7 @@
                 "security": [
                     {
                         "api_key": [],
-                        "oauth2": ["transactions_r"]
+                        "oauth2": ["address_r"]
                     }
                 ]
             }
@@ -5472,7 +5924,7 @@
         "/v3/application/user/addresses": {
             "get": {
                 "operationId": "getUserAddresses",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to retrieve UserAddresses for a User.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to retrieve UserAddresses for a User.",
                 "tags": ["UserAddress"],
                 "parameters": [
                     {
@@ -5512,6 +5964,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -5534,7 +5996,7 @@
         "/v3/application/users/feedback": {
             "get": {
                 "operationId": "getMemberUserFeedback",
-                "description": "<div class=\"wt-alert wt-alert--inline wt-alert--status-02 wt-mb-xs-2\"><p class=\"wt-text-body-01\">This endpoint isn't functional but we welcome feedback on the proposed schema below.</p></div>\n\nOpen API V3 endpoint to retrieve UserFeedback left by a User.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 endpoint to retrieve UserFeedback left by a User.",
                 "tags": ["UserFeedback"],
                 "parameters": [
                     {
@@ -5574,6 +6036,16 @@
                             }
                         }
                     },
+                    "501": {
+                        "description": "This endpoint is not functional at this time.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -5596,7 +6068,7 @@
         "/v3/application/users/{user_id}": {
             "get": {
                 "operationId": "getUser",
-                "description": "Open API V3 to retrieve a user by ID.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to retrieve a user by ID.",
                 "tags": ["User"],
                 "parameters": [
                     {
@@ -5641,7 +6113,13 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "oauth2": ["email_r"]
+                    }
+                ]
             }
         }
     },
@@ -5687,90 +6165,9 @@
             }
         },
         "schemas": {
-            "Country": {
-                "type": "object",
-                "required": [
-                    "country_id",
-                    "iso_country_code",
-                    "world_bank_country_code",
-                    "name",
-                    "slug",
-                    "lat",
-                    "lon"
-                ],
-                "properties": {
-                    "country_id": {
-                        "type": "integer",
-                        "description": "The country's numeric ID.",
-                        "minimum": 1
-                    },
-                    "iso_country_code": {
-                        "type": "string",
-                        "description": "The two-letter country code according to ISO 3166-1-alpha-2.",
-                        "nullable": true
-                    },
-                    "world_bank_country_code": {
-                        "type": "string",
-                        "description": "The three-letter country code according to the World Bank.",
-                        "nullable": true
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "The country's plain-English name.",
-                        "nullable": true
-                    },
-                    "slug": {
-                        "type": "string",
-                        "description": "The country's plain-English name slugified; suitable for interpolation into a url.",
-                        "nullable": true
-                    },
-                    "lat": {
-                        "type": "number",
-                        "description": "The country's latitude.",
-                        "format": "float",
-                        "nullable": true,
-                        "minimum": -90,
-                        "maximum": 90
-                    },
-                    "lon": {
-                        "type": "number",
-                        "description": "The country's longitude.",
-                        "format": "float",
-                        "nullable": true,
-                        "minimum": -180,
-                        "maximum": 180
-                    }
-                }
-            },
-            "ErrorSchema": {
-                "type": "object",
-                "required": ["error"],
-                "properties": {
-                    "error": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Countries": {
-                "type": "object",
-                "required": ["count", "results"],
-                "properties": {
-                    "count": {
-                        "type": "integer",
-                        "description": "The number of Country resources found.",
-                        "minimum": 0
-                    },
-                    "results": {
-                        "type": "array",
-                        "description": "The Country resources found.",
-                        "items": {
-                            "$ref": "#/components/schemas/Country"
-                        }
-                    }
-                }
-            },
             "PublicUserFeedbacks": {
                 "type": "object",
+                "description": "Represents several UserFeedback records.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -5789,6 +6186,7 @@
             },
             "PublicUserFeedback": {
                 "type": "object",
+                "description": "Represents feedback left by one user for another regarding a transaction.",
                 "required": ["feedback_id", "create_timestamp", "message", "value"],
                 "properties": {
                     "feedback_id": {
@@ -5811,8 +6209,18 @@
                     }
                 }
             },
+            "ErrorSchema": {
+                "type": "object",
+                "required": ["error"],
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    }
+                }
+            },
             "ShopListing": {
                 "type": "object",
+                "description": "A Listing from a Shop. It shows the Listing information",
                 "required": [
                     "listing_id",
                     "user_id",
@@ -6158,6 +6566,7 @@
             },
             "Money": {
                 "type": "object",
+                "description": "A representation of an amount of money.",
                 "required": ["amount", "divisor", "currency_code"],
                 "properties": {
                     "amount": {
@@ -6166,7 +6575,8 @@
                     },
                     "divisor": {
                         "type": "integer",
-                        "description": "The divisor to render the amount."
+                        "description": "The divisor to render the amount.",
+                        "minimum": 0
                     },
                     "currency_code": {
                         "type": "string",
@@ -6176,6 +6586,7 @@
             },
             "ShopListingFiles": {
                 "type": "object",
+                "description": "Represents several ShopListingFiles.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -6194,6 +6605,7 @@
             },
             "ShopListingFile": {
                 "type": "object",
+                "description": "A file attached to a digital ShopListing.",
                 "required": [
                     "listing_file_id",
                     "listing_id",
@@ -6246,6 +6658,7 @@
             },
             "ShopListings": {
                 "type": "object",
+                "description": "A set of ShopListing resources.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -6264,6 +6677,7 @@
             },
             "ListingImage": {
                 "type": "object",
+                "description": "A photograph of a listing for sale.",
                 "required": [
                     "listing_id",
                     "listing_image_id",
@@ -6374,6 +6788,7 @@
             },
             "ListingImages": {
                 "type": "object",
+                "description": "Represents several ListingImages.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -6390,6 +6805,7 @@
             },
             "ListingInventory": {
                 "type": "object",
+                "description": "A representation of a listing's inventory.",
                 "required": [
                     "products",
                     "price_on_property",
@@ -6429,6 +6845,7 @@
             },
             "ListingInventoryProduct": {
                 "type": "object",
+                "description": "A representation of a product for a listing.",
                 "required": [
                     "product_id",
                     "sku",
@@ -6468,6 +6885,7 @@
             },
             "ListingInventoryProductOffering": {
                 "type": "object",
+                "description": "A representation of an offering for a listing.",
                 "required": [
                     "offering_id",
                     "quantity",
@@ -6483,7 +6901,8 @@
                     },
                     "quantity": {
                         "type": "integer",
-                        "description": "The quantity the ProductOffering"
+                        "description": "The quantity the ProductOffering",
+                        "minimum": 0
                     },
                     "is_enabled": {
                         "type": "boolean",
@@ -6500,6 +6919,7 @@
             },
             "ListingPropertyValue": {
                 "type": "object",
+                "description": "A representation of structured data values.",
                 "required": [
                     "property_id",
                     "property_name",
@@ -6546,78 +6966,9 @@
                     }
                 }
             },
-            "ListingProduct": {
-                "type": "object",
-                "required": ["property_values", "offerings"],
-                "properties": {
-                    "sku": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "property_values": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/PropertyValue"
-                        }
-                    },
-                    "offerings": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Offering"
-                        }
-                    }
-                }
-            },
-            "PropertyValue": {
-                "type": "object",
-                "required": ["property_id", "value_ids", "values"],
-                "properties": {
-                    "property_id": {
-                        "type": "integer",
-                        "minimum": 1
-                    },
-                    "value_ids": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer",
-                            "minimum": 1
-                        }
-                    },
-                    "scale_id": {
-                        "type": "integer",
-                        "nullable": true,
-                        "minimum": 1
-                    },
-                    "property_name": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "values": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-            "Offering": {
-                "type": "object",
-                "required": ["price", "quantity", "is_enabled"],
-                "properties": {
-                    "price": {
-                        "type": "number",
-                        "format": "float"
-                    },
-                    "quantity": {
-                        "type": "integer"
-                    },
-                    "is_enabled": {
-                        "type": "boolean"
-                    }
-                }
-            },
             "ListingPropertyValues": {
                 "type": "object",
+                "description": "Represents several ListingPropertyValues.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -6634,6 +6985,7 @@
             },
             "ListingShippingProfile": {
                 "type": "object",
+                "description": "Represents a profile used to set a listing's shipping information. Please note that it's not possible to create calculated shipping templates via the API. However, you can associate calculated shipping profiles created from Shop Manager with listings using the API.",
                 "required": [
                     "shipping_profile_id",
                     "title",
@@ -6641,7 +6993,8 @@
                     "min_processing_days",
                     "max_processing_days",
                     "processing_days_display_label",
-                    "origin_country_id"
+                    "origin_country_iso",
+                    "shipping_profile_destinations"
                 ],
                 "properties": {
                     "shipping_profile_id": {
@@ -6674,20 +7027,29 @@
                         "type": "string",
                         "description": "Translated display label for processing days."
                     },
-                    "origin_country_id": {
-                        "type": "integer",
-                        "description": "The numeric ID of the country from which the listing ships.",
-                        "minimum": 1
+                    "origin_country_iso": {
+                        "type": "string",
+                        "description": "The ISO code of the country from which the listing ships.",
+                        "format": "ISO 3166-1 alpha-2"
+                    },
+                    "shipping_profile_destinations": {
+                        "type": "array",
+                        "description": "Set of destinations of this shipping profile.",
+                        "items": {
+                            "$ref": "#/components/schemas/ListingShippingProfileDestination"
+                        }
                     }
                 }
             },
             "ListingShippingProfileDestination": {
                 "type": "object",
+                "description": "A ShippingProfileDestination represents a destination corresponding to its ShippingProfile",
                 "required": [
                     "shipping_profile_entry_id",
                     "shipping_profile_id",
                     "origin_country_iso",
                     "destination_country_iso",
+                    "destination_region",
                     "primary_cost",
                     "secondary_cost"
                 ],
@@ -6704,11 +7066,17 @@
                     },
                     "origin_country_iso": {
                         "type": "string",
-                        "description": "The ISO code of the country from which the listing ships."
+                        "description": "The ISO code of the country from which the listing ships.",
+                        "format": "ISO 3166-1 alpha-2"
                     },
                     "destination_country_iso": {
                         "type": "string",
                         "description": "The ISO code of the country to which the listing ships (optional). If missing, these fees apply to all destinations."
+                    },
+                    "destination_region": {
+                        "type": "string",
+                        "description": "The code of the region to which the listing ships. A region represents a set of countries.",
+                        "enum": ["eu", "non_eu", "none"]
                     },
                     "primary_cost": {
                         "$ref": "#/components/schemas/Money"
@@ -6718,8 +7086,9 @@
                     }
                 }
             },
-            "ListingShippingProfileEntries": {
+            "ListingShippingProfileDestinations": {
                 "type": "object",
+                "description": "Represents several ListingShippingProfileDestinations.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -6736,6 +7105,7 @@
             },
             "ListingShippingProfiles": {
                 "type": "object",
+                "description": "Represents several ListingShippingProfiles.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -6752,6 +7122,7 @@
             },
             "ListingShippingProfileUpgrade": {
                 "type": "object",
+                "description": "A representation of shipping upgrade info.",
                 "required": [
                     "shipping_profile_id",
                     "value_id",
@@ -6801,6 +7172,7 @@
             },
             "ListingShippingProfileUpgrades": {
                 "type": "object",
+                "description": "Represents several ListingShippingProfileUpgrades.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -6817,6 +7189,7 @@
             },
             "ShopReceiptTransactions": {
                 "type": "object",
+                "description": "A set of ShopReceiptTransaction resources",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -6834,6 +7207,7 @@
             },
             "ShopReceiptTransaction": {
                 "type": "object",
+                "description": "ShopReceiptTransaction objects associated to a ShopReceipt. One ShopReceiptTransaction per listing purchased in a ShopReceipt order.",
                 "required": [
                     "transaction_id",
                     "title",
@@ -6844,7 +7218,7 @@
                     "paid_timestamp",
                     "shipped_timestamp",
                     "quantity",
-                    "image_listing_id",
+                    "listing_image_id",
                     "receipt_id",
                     "is_digital",
                     "file_data",
@@ -6902,7 +7276,7 @@
                         "description": "The quantity of items in this transaction.",
                         "minimum": 0
                     },
-                    "image_listing_id": {
+                    "listing_image_id": {
                         "type": "integer",
                         "description": "The numeric ID of the primary listing image for this transaction.",
                         "nullable": true,
@@ -6958,6 +7332,7 @@
             },
             "ListingTranslation": {
                 "type": "object",
+                "description": "Represents the translation data for a Listing.",
                 "required": [
                     "listing_id",
                     "language",
@@ -6994,6 +7369,7 @@
             },
             "ListingVariationImages": {
                 "type": "object",
+                "description": "Represents several ListingVariationImages.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -7010,6 +7386,7 @@
             },
             "ListingVariationImage": {
                 "type": "object",
+                "description": "A representation of the associations of variations and images on a listing.",
                 "required": ["property_id", "value_id", "image_id"],
                 "properties": {
                     "property_id": {
@@ -7031,6 +7408,7 @@
             },
             "PaymentAccountLedgerEntries": {
                 "type": "object",
+                "description": "A set of PaymentAccountLedgerEntry resources",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -7049,6 +7427,7 @@
             },
             "PaymentAccountLedgerEntry": {
                 "type": "object",
+                "description": "Represents an entry in a shop's ledger.",
                 "required": [
                     "entry_id",
                     "ledger_id",
@@ -7100,6 +7479,7 @@
             },
             "Payments": {
                 "type": "object",
+                "description": "Represents several Payments made with Etsy Payments. Please note all monetary amounts are in USD pennies unless otherwise specified.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -7118,6 +7498,7 @@
             },
             "Payment": {
                 "type": "object",
+                "description": "Represents a Payment made with Etsy Payments. Please note all monetary amounts are in USD pennies unless otherwise specified.",
                 "required": [
                     "payment_id",
                     "buyer_user_id",
@@ -7133,9 +7514,9 @@
                     "shipping_address_id",
                     "billing_address_id",
                     "status",
-                    "shipped_date",
-                    "create_date",
-                    "update_date",
+                    "shipped_timestamp",
+                    "create_timestamp",
+                    "update_timestamp",
                     "payment_adjustments"
                 ],
                 "properties": {
@@ -7220,21 +7601,21 @@
                         "type": "string",
                         "description": "Most commonly \"settled\" or \"authed\". Marks the current status of the payment."
                     },
-                    "shipped_date": {
+                    "shipped_timestamp": {
                         "type": "integer",
-                        "description": "The date and time the payment was shipped in Epoch seconds.",
+                        "description": "The date and time the payment was shipped in epoch seconds.",
                         "nullable": true,
-                        "minimum": 0
+                        "minimum": 946684800
                     },
-                    "create_date": {
+                    "create_timestamp": {
                         "type": "integer",
-                        "description": "The date and time the payment was created in Epoch seconds.",
-                        "minimum": 0
+                        "description": "The date and time the payment was created in epoch seconds.",
+                        "minimum": 946684800
                     },
-                    "update_date": {
+                    "update_timestamp": {
                         "type": "integer",
-                        "description": "The date and time the payment was last updated in Epoch seconds.",
-                        "minimum": 0
+                        "description": "The date and time the payment was last updated in epoch seconds.",
+                        "minimum": 946684800
                     },
                     "payment_adjustments": {
                         "type": "array",
@@ -7247,6 +7628,7 @@
             },
             "PaymentAdjustment": {
                 "type": "object",
+                "description": "Represents refund on an Etsy Payments transaction. Please note all monetary amounts are in USD pennies unless otherwise specified.",
                 "required": [
                     "payment_adjustment_id",
                     "payment_id",
@@ -7258,8 +7640,8 @@
                     "shop_total_adjustment_amount",
                     "buyer_total_adjustment_amount",
                     "total_fee_adjustment_amount",
-                    "create_date",
-                    "update_date"
+                    "create_timestamp",
+                    "update_timestamp"
                 ],
                 "properties": {
                     "payment_adjustment_id": {
@@ -7313,20 +7695,21 @@
                         "nullable": true,
                         "minimum": 0
                     },
-                    "create_date": {
+                    "create_timestamp": {
                         "type": "integer",
-                        "description": "The date and time the payment adjustment was created in Epoch seconds.",
-                        "minimum": 0
+                        "description": "The date and time the payment adjustment was created in epoch seconds.",
+                        "minimum": 946684800
                     },
-                    "update_date": {
+                    "update_timestamp": {
                         "type": "integer",
-                        "description": "The date and time the payment adjustment was last updated in Epoch seconds.",
-                        "minimum": 0
+                        "description": "The date and time the payment adjustment was last updated in epoch seconds.",
+                        "minimum": 946684800
                     }
                 }
             },
             "ShopReceipt": {
                 "type": "object",
+                "description": "A purchase from a shop. The ShopReceipt displays monetary values using the shop's currency.",
                 "required": [
                     "receipt_id",
                     "receipt_type",
@@ -7500,6 +7883,7 @@
             },
             "ShopReceiptShipment": {
                 "type": "object",
+                "description": "A shipment event for a ShopReceipt. A single ShopReceipt may have many ShopReceiptShipment events.",
                 "required": [
                     "receipt_shipping_id",
                     "shipment_notification_timestamp",
@@ -7530,6 +7914,7 @@
             },
             "ShopReceipts": {
                 "type": "object",
+                "description": "A set of ShopReceipt resources.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -7545,8 +7930,240 @@
                     }
                 }
             },
+            "SellerTaxonomyNodes": {
+                "type": "object",
+                "description": "A set of SellerTaxonomyNode resources.",
+                "required": ["count", "results"],
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "description": "The number of SellerTaxonomyNode resources found.",
+                        "minimum": 0
+                    },
+                    "results": {
+                        "type": "array",
+                        "description": "The SellerTaxonomyNode resources found.",
+                        "items": {
+                            "$ref": "#/components/schemas/SellerTaxonomyNode"
+                        }
+                    }
+                }
+            },
+            "SellerTaxonomyNode": {
+                "type": "object",
+                "description": "A node in the tree of categories that are used for Listings.",
+                "required": [
+                    "id",
+                    "level",
+                    "name",
+                    "parent",
+                    "path",
+                    "category_id",
+                    "children",
+                    "children_ids",
+                    "full_path_taxonomy_ids"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "The unique ID of this taxonomy node.",
+                        "minimum": 1
+                    },
+                    "level": {
+                        "type": "integer",
+                        "description": "Depth in the taxonomy, roots are at level 0.",
+                        "minimum": 0
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Human readable name for this taxonomy node."
+                    },
+                    "parent": {
+                        "type": "string",
+                        "description": "Path of our parent node."
+                    },
+                    "parent_id": {
+                        "type": "integer",
+                        "description": "ID of our parent node.",
+                        "nullable": true,
+                        "minimum": 1,
+                        "default": null
+                    },
+                    "path": {
+                        "type": "string",
+                        "description": "Path from the root to this node, separated by periods."
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "description": "The corresponding ID in Etsy's Category API resource.",
+                        "minimum": 1
+                    },
+                    "children": {
+                        "type": "array",
+                        "description": "The child Taxonomy nodes, embedded directly in the response.",
+                        "items": {
+                            "$ref": "#/components/schemas/SellerTaxonomyNode"
+                        }
+                    },
+                    "children_ids": {
+                        "type": "array",
+                        "description": "The taxonomy_ids of our child nodes.",
+                        "items": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    },
+                    "full_path_taxonomy_ids": {
+                        "type": "array",
+                        "description": "The taxonomy_ids of this node and all its parents. They are listed in order from root to leaf.",
+                        "items": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                }
+            },
+            "TaxonomyNodeProperties": {
+                "type": "object",
+                "description": "A set of TaxonomyNodeProperty resources.",
+                "required": ["count", "results"],
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "description": "The number of TaxonomyNodeProperty resources found.",
+                        "minimum": 0
+                    },
+                    "results": {
+                        "type": "array",
+                        "description": "The TaxonomyNodeProperty resources found.",
+                        "items": {
+                            "$ref": "#/components/schemas/TaxonomyNodeProperty"
+                        }
+                    }
+                }
+            },
+            "TaxonomyNodeProperty": {
+                "type": "object",
+                "description": "A property from tge node in the tree of categories that are used for Listings.",
+                "required": [
+                    "property_id",
+                    "name",
+                    "display_name",
+                    "scales",
+                    "is_required",
+                    "supports_attributes",
+                    "supports_variations",
+                    "is_multivalued",
+                    "possible_values",
+                    "selected_values"
+                ],
+                "properties": {
+                    "property_id": {
+                        "type": "integer",
+                        "description": "The ID of the property.",
+                        "minimum": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the property."
+                    },
+                    "display_name": {
+                        "type": "string",
+                        "description": "The name used in user interfaces."
+                    },
+                    "scales": {
+                        "type": "array",
+                        "description": "A list of available scales.",
+                        "items": {
+                            "$ref": "#/components/schemas/TaxonomyPropertyScale"
+                        }
+                    },
+                    "is_required": {
+                        "type": "boolean",
+                        "description": "Is this attribute required for listings in this category?"
+                    },
+                    "supports_attributes": {
+                        "type": "boolean",
+                        "description": "Can this property be used in listing attributes?"
+                    },
+                    "supports_variations": {
+                        "type": "boolean",
+                        "description": "Can this property be used in listing variations?"
+                    },
+                    "is_multivalued": {
+                        "type": "boolean",
+                        "description": "Can this property have multiple values?"
+                    },
+                    "possible_values": {
+                        "type": "array",
+                        "description": "A list of allowed values.",
+                        "items": {
+                            "$ref": "#/components/schemas/TaxonomyPropertyValue"
+                        }
+                    },
+                    "selected_values": {
+                        "type": "array",
+                        "description": "A list of values that are always selected for the given category.",
+                        "items": {
+                            "$ref": "#/components/schemas/TaxonomyPropertyValue"
+                        }
+                    }
+                }
+            },
+            "TaxonomyPropertyScale": {
+                "type": "object",
+                "description": "A representation of a scale for a property.",
+                "required": ["scale_id", "display_name", "description"],
+                "properties": {
+                    "scale_id": {
+                        "type": "integer",
+                        "description": "The ID of the scale.",
+                        "minimum": 1
+                    },
+                    "display_name": {
+                        "type": "string",
+                        "description": "How to label the scale."
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the scale."
+                    }
+                }
+            },
+            "TaxonomyPropertyValue": {
+                "type": "object",
+                "description": "A representation of structured data values.",
+                "required": ["value_id", "name", "scale_id", "equal_to"],
+                "properties": {
+                    "value_id": {
+                        "type": "integer",
+                        "description": "The numeric ID of this value.",
+                        "nullable": true,
+                        "minimum": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "How to display the value."
+                    },
+                    "scale_id": {
+                        "type": "integer",
+                        "description": "The ID of the scale this belongs to (if any).",
+                        "nullable": true,
+                        "minimum": 1
+                    },
+                    "equal_to": {
+                        "type": "array",
+                        "description": "The list of values this value is equal to (if any).",
+                        "items": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                }
+            },
             "UserFeedbacks": {
                 "type": "object",
+                "description": "Represents several UserFeedback records.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -7565,6 +8182,7 @@
             },
             "UserFeedback": {
                 "type": "object",
+                "description": "Represents feedback left by one user for another regarding a transaction.",
                 "required": [
                     "feedback_id",
                     "transaction_id",
@@ -7645,6 +8263,7 @@
             },
             "Shop": {
                 "type": "object",
+                "description": "A store created by a member.",
                 "required": [
                     "shop_id",
                     "user_id",
@@ -7873,6 +8492,7 @@
             },
             "Shops": {
                 "type": "object",
+                "description": "A set of Shop records.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -7891,6 +8511,7 @@
             },
             "ShopSection": {
                 "type": "object",
+                "description": "A section within a user's shop.",
                 "required": [
                     "shop_section_id",
                     "title",
@@ -7927,6 +8548,7 @@
             },
             "ShopSections": {
                 "type": "object",
+                "description": "All shop sections related to a Shop.",
                 "required": ["count", "results"],
                 "properties": {
                     "count": {
@@ -7943,26 +8565,9 @@
                     }
                 }
             },
-            "UserAddresses": {
-                "type": "object",
-                "required": ["count", "results"],
-                "properties": {
-                    "count": {
-                        "type": "integer",
-                        "description": "The number of UserAddress records being returned.",
-                        "minimum": 0
-                    },
-                    "results": {
-                        "type": "array",
-                        "description": "An array of UserAddress resources.",
-                        "items": {
-                            "$ref": "#/components/schemas/UserAddress"
-                        }
-                    }
-                }
-            },
             "UserAddress": {
                 "type": "object",
+                "description": "Represents a user's address.",
                 "required": [
                     "user_address_id",
                     "user_id",
@@ -8025,13 +8630,33 @@
                     }
                 }
             },
+            "UserAddresses": {
+                "type": "object",
+                "description": "Represents several UserAddress records.",
+                "required": ["count", "results"],
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "description": "The number of UserAddress records being returned.",
+                        "minimum": 0
+                    },
+                    "results": {
+                        "type": "array",
+                        "description": "An array of UserAddress resources.",
+                        "items": {
+                            "$ref": "#/components/schemas/UserAddress"
+                        }
+                    }
+                }
+            },
             "User": {
                 "type": "object",
+                "description": "Represents a single user of the site",
                 "required": [
                     "user_id",
                     "login_name",
                     "primary_email",
-                    "create_date",
+                    "create_timestamp",
                     "referred_by_user_id",
                     "awaiting_feedback_count",
                     "use_new_inventory_endpoints",
@@ -8048,13 +8673,15 @@
                         "description": "The user's login name."
                     },
                     "primary_email": {
-                        "type": "object",
-                        "description": "The user's primary email address."
+                        "type": "string",
+                        "description": "The user's primary email address.",
+                        "format": "email",
+                        "nullable": true
                     },
-                    "create_date": {
+                    "create_timestamp": {
                         "type": "integer",
                         "description": "The date and time the user was created, in epoch seconds.",
-                        "minimum": 0
+                        "minimum": 946684800
                     },
                     "referred_by_user_id": {
                         "type": "integer",
