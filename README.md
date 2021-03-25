@@ -21,6 +21,11 @@ We’ve spent a lot of time poring over data and charts, but we recognize that o
 
 We’re publishing early drafts of documentation here for your feedback—we’ll make adjustments based on what we hear from you to make it as useful as possible. You’ll find our [OpenAPI Specification](http://spec.openapis.org/oas/v3.0.3) (OAS) file that defines the interface for our API and powers our reference documentation site. You’ll also find Markdown files that will be published to our new documentation hub, which is launching in the coming months.
 
+Take a look at the following resources for more information on how to implement Open API v3:
+
+* A [migration guide](https://github.com/etsy/open-api/blob/main/docs/migration-guide.md)
+* Implementation instructions for [OAuth2.0](https://www.etsy.com/developers/documentation/getting_started/oauth2)
+
 
 ## What kind of feedback are we looking for?
 
