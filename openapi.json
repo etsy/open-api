@@ -48,6 +48,9 @@
             "name": "SellerTaxonomy"
         },
         {
+            "name": "Review"
+        },
+        {
             "name": "Shop Receipt"
         },
         {
@@ -113,6 +116,10 @@
             "tags": ["Shop Receipt", "Shop Receipt Transactions"]
         },
         {
+            "name": "Review Management",
+            "tags": ["Review"]
+        },
+        {
             "name": "Shop Management",
             "tags": ["Shop", "Shop Section"]
         },
@@ -125,17 +132,17 @@
         "/v3/application/shops/{shop_id}/listings": {
             "post": {
                 "operationId": "createListing",
-                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nCreates a new listing",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nCreates a [listing](/openapi/developers#tag/ShopListing) of a product for sale in a shop.",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     }
@@ -156,20 +163,25 @@
                                 ],
                                 "properties": {
                                     "quantity": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "description": "The positive non-zero number of products available for purchase in the listing. Note: The listing quantity is the sum of available offering quantities. You can request the quantities for individual offerings from the ListingInventory resource using the [getListingInventory](/openapi/developeres#operation/getListingInventory) endpoint."
                                     },
                                     "title": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "The listing's title string. Valid title strings contain only letters, numbers, punctuation marks, mathematical symbols, whitespace characters, ™, ©, and ®. (regex: /[^\\p{L}\\p{Nd}\\p{P}\\p{Sm}\\p{Zs}™©®]/u) You can only use the %, :, & and + characters once each."
                                     },
                                     "description": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "A description string of the product for sale in the listing."
                                     },
                                     "price": {
                                         "type": "number",
+                                        "description": "The positive non-zero price of the product. (Sold product listings are private) Note: The price is the minimum possible price. The getInventory method requests exact prices for available offerings.",
                                         "format": "float"
                                     },
                                     "who_made": {
                                         "type": "string",
+                                        "description": "An enumerated string inidcated who made the product. Helps buyers locate the listing under the Handmade heading.",
                                         "enum": [
                                             "i_did",
                                             "someone_else",
@@ -178,6 +190,7 @@
                                     },
                                     "when_made": {
                                         "type": "string",
+                                        "description": "An enumerated string for the era in which the maker made the product in this listing. Helps buyers locate the listing under the Vintage heading.",
                                         "enum": [
                                             "made_to_order",
                                             "2020_2021",
@@ -202,15 +215,17 @@
                                     },
                                     "taxonomy_id": {
                                         "type": "integer",
+                                        "description": "The numeric taxonomy ID of the listing. The seller manages listing taxonomy IDs for their shop.  [See SellerTaxonomy](/openapi/developers#tag/SellerTaxonomy) for more information.",
                                         "minimum": 1
                                     },
                                     "type": {
                                         "type": "string",
-                                        "enum": ["physical", "download", "both"],
-                                        "default": "physical"
+                                        "description": "An enumerated type string that indicates whether the listing is physical or a digital download.",
+                                        "enum": ["physical", "download", "both"]
                                     },
                                     "materials": {
                                         "type": "array",
+                                        "description": "A list of material strings for materials used in the product. Valid materials strings contain only letters, numbers, and whitespace characters. (regex: /[^\\p{L}\\p{Nd}\\p{Zs}]/u) Default value is null.",
                                         "nullable": true,
                                         "items": {
                                             "type": "string",
@@ -219,24 +234,29 @@
                                     },
                                     "shipping_profile_id": {
                                         "type": "integer",
+                                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                                         "nullable": true,
                                         "minimum": 1
                                     },
                                     "shop_section_id": {
                                         "type": "integer",
+                                        "description": "The numeric ID of the [shop section](/openapi/developeres#tag/Shop-Section) for this listing. Default value is null.",
                                         "nullable": true,
                                         "minimum": 1
                                     },
                                     "processing_min": {
                                         "type": "integer",
+                                        "description": "The minimum number of days required to process this listing. Default value is null.",
                                         "nullable": true
                                     },
                                     "processing_max": {
                                         "type": "integer",
+                                        "description": "The maximum number of days required to process this listing. Default value is null.",
                                         "nullable": true
                                     },
                                     "tags": {
                                         "type": "array",
+                                        "description": "A list of tag strings for the listing. Valid tag strings contain only letters, numbers, whitespace characters, -, ', ™, ©, and ®. (regex: /[^\\p{L}\\p{Nd}\\p{Zs}\\-'™©®]/u) Default value is null.",
                                         "nullable": true,
                                         "items": {
                                             "type": "string",
@@ -245,6 +265,7 @@
                                     },
                                     "recipient": {
                                         "type": "string",
+                                        "description": "An enumerated string indicating a person for whom this product would make an appropriate gift. Default value is null.",
                                         "nullable": true,
                                         "enum": [
                                             "men",
@@ -268,6 +289,7 @@
                                     },
                                     "occasion": {
                                         "type": "string",
+                                        "description": "An enumerated string indicating an occassion for which this product would make an appropriate gift. Default value is null.",
                                         "nullable": true,
                                         "enum": [
                                             "anniversary",
@@ -307,6 +329,7 @@
                                     },
                                     "styles": {
                                         "type": "array",
+                                        "description": "An array of style strings for this listing, each of which is free-form text string such as \"Formal\", or \"Steampunk\". A Listing may have up to two styles. Valid style strings contain only letters, numbers, and whitespace characters. (regex: /[^\\p{L}\\p{Nd}\\p{Zs}]/u) Default value is null.",
                                         "nullable": true,
                                         "items": {
                                             "type": "string",
@@ -315,31 +338,37 @@
                                     },
                                     "item_weight": {
                                         "type": "number",
+                                        "description": "The numeric weight of the product measured in units set in 'item_weight_unit'. Default value is null.",
                                         "format": "float",
                                         "nullable": true
                                     },
                                     "item_length": {
                                         "type": "number",
+                                        "description": "The numeric length of the product measured in units set in 'item_dimensions_unit'. Default value is null.",
                                         "format": "float",
                                         "nullable": true
                                     },
                                     "item_width": {
                                         "type": "number",
+                                        "description": "The numeric width of the product measured in units set in 'item_dimensions_unit'. Default value is null.",
                                         "format": "float",
                                         "nullable": true
                                     },
                                     "item_height": {
                                         "type": "number",
+                                        "description": "The numeric height of the product measured in units set in 'item_dimensions_unit'. Default value is null.",
                                         "format": "float",
                                         "nullable": true
                                     },
                                     "item_weight_unit": {
                                         "type": "string",
+                                        "description": "A string defining the units used to measure the weight of the product. Default value is null.",
                                         "nullable": true,
                                         "enum": ["oz", "lb", "g", "kg"]
                                     },
                                     "item_dimensions_unit": {
                                         "type": "string",
+                                        "description": "A string defining the units used to measure the dimensions of the product. Default value is null.",
                                         "nullable": true,
                                         "enum": [
                                             "in",
@@ -352,10 +381,12 @@
                                         ]
                                     },
                                     "is_personalizable": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "description": "When true, this listing is personalizable. The default value is null."
                                     },
                                     "image_ids": {
                                         "type": "array",
+                                        "description": "An array of numeric image IDs of the images in a listing, which can include up to 10 images.",
                                         "items": {
                                             "type": "integer",
                                             "minimum": 1
@@ -363,17 +394,12 @@
                                     },
                                     "state": {
                                         "type": "string",
-                                        "enum": [
-                                            "active",
-                                            "inactive",
-                                            "sold_out",
-                                            "draft",
-                                            "removed",
-                                            "expired"
-                                        ]
+                                        "description": "An enumerated string from any of: active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
+                                        "enum": ["0", "1", "2", "3", "4", "5"]
                                     },
                                     "channels": {
                                         "type": "array",
+                                        "description": "An array of enumerated channel ID strings. A channel is a venue for sellers to reach buyers in order to make sales.",
                                         "items": {
                                             "type": "string",
                                             "enum": [
@@ -385,22 +411,28 @@
                                         }
                                     },
                                     "is_supply": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "description": "When true, tags the listing as a supply product. Helps buyers locate the listing under the Supplies heading."
                                     },
                                     "is_customizable": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "description": "When true, a buyer may contact the seller for a customized order. The default value is true when a shop accepts custom orders. Does not apply to shops that do not accept custom orders."
                                     },
                                     "is_taxable": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "description": "When true, applicable [shop](/openapi/developeres#tag/Shop) tax rates apply to this listing at checkout."
                                     },
                                     "is_private": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "description": "When true, this is a private listing intendend for a specific buyer and hidden from shop view."
                                     },
                                     "should_auto_renew": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "description": "When true, renews a listing for four months upon expriation. If set to true when previously false, etsy.com renews the listing before it expires, but the renewal period starts immidiately rather than extending the listing's expiration date. Any unused time remaining on the listing is lost. Renewals result in charges to a user's bill."
                                     },
                                     "is_digital": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "description": "When true, product is digital."
                                     }
                                 }
                             }
@@ -476,36 +508,16 @@
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "A single ShopListing",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ShopListing"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "A resource could not be found. See the error message for details.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorSchema"
-                                }
-                            }
-                        }
-                    },
                     "403": {
                         "description": "The request attempted to perform an operation it is not allowed to. See the error message for details.",
                         "content": {
@@ -518,6 +530,19 @@
                     },
                     "409": {
                         "description": "There was a request conflict with current state of the target resource. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "The Listing resource was correctly deleted"
+                    },
+                    "404": {
+                        "description": "A resource could not be found. See the error message for details.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -546,24 +571,24 @@
             },
             "get": {
                 "operationId": "getListing",
-                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet a listing",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nRetrieves a listing record by listing ID.",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single Listing",
+                        "description": "A single Listing.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -604,11 +629,11 @@
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
@@ -625,16 +650,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "A list of remaining ShopListingFile resources attached to the Listing.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ShopListingFiles"
-                                }
-                            }
-                        }
-                    },
                     "409": {
                         "description": "There was a request conflict with current state of the target resource. See the error message for details.",
                         "content": {
@@ -654,6 +669,9 @@
                                 }
                             }
                         }
+                    },
+                    "204": {
+                        "description": "The ShopListingFile resource was correctly deleted"
                     },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
@@ -681,11 +699,11 @@
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
@@ -750,11 +768,11 @@
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -806,11 +824,11 @@
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -972,11 +990,11 @@
                     {
                         "name": "min_price",
                         "in": "query",
-                        "description": "The minimum price of listings to be returned by a search result",
+                        "description": "The minimum price of listings to be returned by a search result.",
                         "required": false,
                         "schema": {
                             "type": "number",
-                            "description": "The minimum price of listings to be returned by a search result",
+                            "description": "The minimum price of listings to be returned by a search result.",
                             "format": "float",
                             "default": null
                         }
@@ -984,11 +1002,11 @@
                     {
                         "name": "max_price",
                         "in": "query",
-                        "description": "The maximum price of listings to be returned by a search result",
+                        "description": "The maximum price of listings to be returned by a search result.",
                         "required": false,
                         "schema": {
                             "type": "number",
-                            "description": "The maximum price of listings to be returned by a search result",
+                            "description": "The maximum price of listings to be returned by a search result.",
                             "format": "float",
                             "default": null
                         }
@@ -996,11 +1014,11 @@
                     {
                         "name": "taxonomy_id",
                         "in": "query",
-                        "description": "The seller taxonomy id of the listing",
+                        "description": "The numeric taxonomy ID of the listing. The seller manages listing taxonomy IDs for their shop.  [See SellerTaxonomy](/openapi/developers#tag/SellerTaxonomy) for more information.",
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "description": "The seller taxonomy id of the listing",
+                            "description": "The numeric taxonomy ID of the listing. The seller manages listing taxonomy IDs for their shop.  [See SellerTaxonomy](/openapi/developers#tag/SellerTaxonomy) for more information.",
                             "minimum": 1,
                             "default": null
                         }
@@ -1008,11 +1026,11 @@
                     {
                         "name": "shop_location",
                         "in": "query",
-                        "description": "Filters by shop location. If location cannot be parsed, an error will be thrown.",
+                        "description": "Filters by shop location. If location cannot be parsed, Etsy responds with an error.",
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "description": "Filters by shop location. If location cannot be parsed, an error will be thrown.",
+                            "description": "Filters by shop location. If location cannot be parsed, Etsy responds with an error.",
                             "default": null
                         }
                     }
@@ -1060,11 +1078,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -1148,48 +1166,38 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_image_id",
                         "in": "path",
-                        "description": "The unique ID of a Listing Image for an Etsy.com Listing.",
+                        "description": "The unique numeric image ID of an image in a listing.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of a Listing Image for an Etsy.com Listing.",
+                            "description": "The unique numeric image ID of an image in a listing.",
                             "minimum": 1
                         }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "A single ListingImage",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ListingImage"
-                                }
-                            }
-                        }
-                    },
                     "404": {
                         "description": "A resource could not be found. See the error message for details.",
                         "content": {
@@ -1220,6 +1228,9 @@
                             }
                         }
                     },
+                    "204": {
+                        "description": "The ListingImage resource was correctly deleted"
+                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -1248,33 +1259,33 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_image_id",
                         "in": "path",
-                        "description": "The unique ID of a Listing Image for an Etsy.com Listing.",
+                        "description": "The unique numeric image ID of an image in a listing.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of a Listing Image for an Etsy.com Listing.",
+                            "description": "The unique numeric image ID of an image in a listing.",
                             "minimum": 1
                         }
                     }
@@ -1322,22 +1333,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -1383,22 +1394,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -1416,7 +1427,7 @@
                                     },
                                     "listing_image_id": {
                                         "type": "integer",
-                                        "description": "The unique ID of a Listing Image for an Etsy.com Listing.",
+                                        "description": "The unique numeric image ID of an image in a listing.",
                                         "minimum": 1
                                     },
                                     "rank": {
@@ -1427,12 +1438,12 @@
                                     },
                                     "overwrite": {
                                         "type": "boolean",
-                                        "description": "Whether or not to replace the existing image at a given rank.",
+                                        "description": "When true, this request replaces the existing image at a given rank.",
                                         "default": false
                                     },
                                     "is_watermarked": {
                                         "type": "boolean",
-                                        "description": "Whether or not the uploaded image is watermarked.",
+                                        "description": "When true, indicates that the uploaded image has a watermark.",
                                         "default": false
                                     }
                                 }
@@ -1574,11 +1585,11 @@
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -1890,11 +1901,11 @@
                     {
                         "name": "state",
                         "in": "query",
-                        "description": "One of active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
+                        "description": "An enumerated string from any of: active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "description": "One of active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
+                            "description": "An enumerated string from any of: active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
                             "enum": [
                                 "active",
                                 "inactive",
@@ -2021,11 +2032,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -2099,6 +2110,99 @@
                 }
             }
         },
+        "/v3/application/shops/{shop_id}/listings/{listing_id}/properties/{property_id}": {
+            "delete": {
+                "operationId": "deleteListingProperty",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nDeletes a property for a Listing.",
+                "tags": ["ShopListing"],
+                "parameters": [
+                    {
+                        "name": "shop_id",
+                        "in": "path",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "listing_id",
+                        "in": "path",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "property_id",
+                        "in": "path",
+                        "description": "The unique ID of an Etsy ListingProperty.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique ID of an Etsy ListingProperty.",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The ListingProperty resource was correctly deleted"
+                    },
+                    "403": {
+                        "description": "The request attempted to perform an operation it is not allowed to. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A resource could not be found. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "There was a problem with the request data. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "The server encountered an internal error. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "oauth2": ["listings_w"]
+                    }
+                ]
+            }
+        },
         "/v3/application/listings/{listing_id}/properties/{property_id}": {
             "get": {
                 "operationId": "getListingProperty",
@@ -2108,11 +2212,11 @@
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
@@ -2179,11 +2283,11 @@
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
@@ -2280,20 +2384,31 @@
                 ]
             }
         },
-        "/v3/application/listings/{listing_id}/properties": {
+        "/v3/application/shops/{shop_id}/listings/{listing_id}/properties": {
             "get": {
                 "operationId": "getListingProperties",
-                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nGet a listing's properties",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nGet a listing's properties",
                 "tags": ["ShopListing"],
                 "parameters": [
                     {
-                        "name": "listing_id",
+                        "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "listing_id",
+                        "in": "path",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -2319,8 +2434,8 @@
                             }
                         }
                     },
-                    "501": {
-                        "description": "This endpoint is not functional at this time.",
+                    "400": {
+                        "description": "There was a problem with the request data. See the error message for details.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2409,11 +2524,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     }
@@ -2565,11 +2680,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     }
@@ -2623,37 +2738,27 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "shipping_profile_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile associated with the listing.",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                             "minimum": 1
                         }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "A single ShippingProfile",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ListingShippingProfile"
-                                }
-                            }
-                        }
-                    },
                     "403": {
                         "description": "The request attempted to perform an operation it is not allowed to. See the error message for details.",
                         "content": {
@@ -2673,6 +2778,9 @@
                                 }
                             }
                         }
+                    },
+                    "204": {
+                        "description": "The ListingShippingProfile resource was correctly deleted"
                     },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
@@ -2700,22 +2808,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "shipping_profile_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile associated with the listing.",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                             "minimum": 1
                         }
                     }
@@ -2777,22 +2885,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "shipping_profile_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile associated with the listing.",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                             "minimum": 1
                         }
                     }
@@ -2891,22 +2999,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "shipping_profile_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile associated with the listing.",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                             "minimum": 1
                         }
                     }
@@ -3027,22 +3135,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "shipping_profile_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile associated with the listing.",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                             "minimum": 1
                         }
                     },
@@ -3121,22 +3229,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "shipping_profile_destination_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile destination associated with the shipping profile of a listing.",
+                        "description": "The numeric ID of the shipping profile destination in the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile destination associated with the shipping profile of a listing.",
+                            "description": "The numeric ID of the shipping profile destination in the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing.",
                             "minimum": 1
                         }
                     }
@@ -3201,22 +3309,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "shipping_profile_destination_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile destination associated with the shipping profile of a listing.",
+                        "description": "The numeric ID of the shipping profile destination in the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile destination associated with the shipping profile of a listing.",
+                            "description": "The numeric ID of the shipping profile destination in the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing.",
                             "minimum": 1
                         }
                     }
@@ -3341,20 +3449,31 @@
                 ]
             }
         },
-        "/v3/application/listings/shipping-profiles/{shipping_profile_id}/upgrades": {
+        "/v3/application/shops/{shop_id}/listings/shipping-profiles/{shipping_profile_id}/upgrades": {
             "post": {
                 "operationId": "createListingShippingProfileUpgrade",
                 "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nCreates a new ListingShippingProfileUpgrade.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
-                        "name": "shipping_profile_id",
+                        "name": "shop_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile associated with the listing.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "shipping_profile_id",
+                        "in": "path",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                             "minimum": 1
                         }
                     }
@@ -3366,7 +3485,7 @@
                                 "type": "object",
                                 "required": [
                                     "type",
-                                    "label",
+                                    "upgrade_name",
                                     "price",
                                     "secondary_price"
                                 ],
@@ -3376,9 +3495,9 @@
                                         "description": "The type of the shipping upgrade. Domestic (0) or international (1).",
                                         "enum": ["0", "1"]
                                     },
-                                    "label": {
+                                    "upgrade_name": {
                                         "type": "string",
-                                        "description": "Label for the shipping upgrade shown to shoppers at checkout, e.g. USPS Priority."
+                                        "description": "Name for the shipping upgrade shown to shoppers at checkout, e.g. USPS Priority."
                                     },
                                     "price": {
                                         "type": "number",
@@ -3471,17 +3590,28 @@
             },
             "get": {
                 "operationId": "getListingShippingProfileUpgrades",
-                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nRetrieve a set of ListingShippingProfileUpgrades associated to a ShippingProfile.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nRetrieve a set of ListingShippingProfileUpgrades associated with a ShippingProfile.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
-                        "name": "shipping_profile_id",
+                        "name": "shop_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile associated with the listing.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "shipping_profile_id",
+                        "in": "path",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                             "minimum": 1
                         }
                     }
@@ -3499,16 +3629,6 @@
                     },
                     "400": {
                         "description": "There was a problem with the request data. See the error message for details.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorSchema"
-                                }
-                            }
-                        }
-                    },
-                    "501": {
-                        "description": "This endpoint is not functional at this time.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3536,31 +3656,133 @@
                 ]
             }
         },
-        "/v3/application/listings/shipping-profiles/{shipping_profile_id}/upgrades/{label_id}": {
-            "put": {
-                "operationId": "updateListingShippingProfileUpgrade",
-                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nUpdates a ListingShippingProfileUpgrade. Updates any listings linked to the ShippingProfile.",
+        "/v3/application/shops/{shop_id}/listings/shipping-profiles/{shipping_profile_id}/upgrades/{upgrade_id}": {
+            "delete": {
+                "operationId": "deleteListingShippingProfileUpgrade",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nDeletes a ListingShippingProfileUpgrade. Updates any listings linked to the ShippingProfile.",
                 "tags": ["ShopListing ShippingProfile"],
                 "parameters": [
                     {
-                        "name": "shipping_profile_id",
+                        "name": "shop_id",
                         "in": "path",
-                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID of the shipping profile associated with the listing.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
-                        "name": "label_id",
+                        "name": "shipping_profile_id",
                         "in": "path",
-                        "description": "The numeric ID that is associated with a shipping upgrade value",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The numeric ID that is associated with a shipping upgrade value",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "upgrade_id",
+                        "in": "path",
+                        "description": "The numeric ID that is associated with a shipping upgrade",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The numeric ID that is associated with a shipping upgrade",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The ListingShippingProfileUpgrade resource was correctly deleted"
+                    },
+                    "403": {
+                        "description": "The request attempted to perform an operation it is not allowed to. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A resource could not be found. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "There was a problem with the request data. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "The server encountered an internal error. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "oauth2": ["listings_w"]
+                    }
+                ]
+            },
+            "put": {
+                "operationId": "updateListingShippingProfileUpgrade",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nUpdates a ListingShippingProfileUpgrade. Updates any listings linked to the ShippingProfile.",
+                "tags": ["ShopListing ShippingProfile"],
+                "parameters": [
+                    {
+                        "name": "shop_id",
+                        "in": "path",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "shipping_profile_id",
+                        "in": "path",
+                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "upgrade_id",
+                        "in": "path",
+                        "description": "The numeric ID that is associated with a shipping upgrade",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The numeric ID that is associated with a shipping upgrade",
                             "minimum": 1
                         }
                     }
@@ -3570,8 +3792,12 @@
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": ["type", "price", "secondary_price"],
                                 "properties": {
+                                    "upgrade_name": {
+                                        "type": "string",
+                                        "description": "Name for the shipping upgrade shown to shoppers at checkout, e.g. USPS Priority.",
+                                        "default": null
+                                    },
                                     "type": {
                                         "type": "string",
                                         "description": "The type of the shipping upgrade. Domestic (0) or international (1).",
@@ -3580,12 +3806,39 @@
                                     "price": {
                                         "type": "number",
                                         "description": "Additional cost of adding the shipping upgrade.",
-                                        "format": "float"
+                                        "format": "float",
+                                        "default": null
                                     },
                                     "secondary_price": {
                                         "type": "number",
                                         "description": "Additional cost of adding the shipping upgrade for each additional item.",
-                                        "format": "float"
+                                        "format": "float",
+                                        "default": null
+                                    },
+                                    "shipping_carrier_id": {
+                                        "type": "integer",
+                                        "description": "The unique ID of a supported shipping carrier, which is used to calculate an Estimated Delivery Date.",
+                                        "minimum": 0,
+                                        "default": null
+                                    },
+                                    "mail_class": {
+                                        "type": "string",
+                                        "description": "The unique ID of a shipping carrier's mail class, which is used to calculate an Estimated Delivery Date.",
+                                        "default": null
+                                    },
+                                    "min_delivery_days": {
+                                        "type": "integer",
+                                        "description": "The minimum number of business days a buyer can expect to wait to receive their purchased item once it has shipped.",
+                                        "minimum": 1,
+                                        "maximum": 45,
+                                        "default": null
+                                    },
+                                    "max_delivery_days": {
+                                        "type": "integer",
+                                        "description": "The maximum number of business days a buyer can expect to wait to receive their purchased item once it has shipped.",
+                                        "minimum": 1,
+                                        "maximum": 45,
+                                        "default": null
                                     }
                                 }
                             }
@@ -3613,16 +3866,6 @@
                             }
                         }
                     },
-                    "501": {
-                        "description": "This endpoint is not functional at this time.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorSchema"
-                                }
-                            }
-                        }
-                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -3642,20 +3885,31 @@
                 ]
             }
         },
-        "/v3/application/listings/{listing_id}/transactions": {
+        "/v3/application/shops/{shop_id}/listings/{listing_id}/transactions": {
             "get": {
                 "operationId": "getShopReceiptTransactionsByListing",
-                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nOpen API V3 to retrieve a set of ShopTransaction resources associated to a Listing.",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to retrieve a set of ShopTransaction resources associated to a Listing.",
                 "tags": ["Shop Receipt Transactions"],
                 "parameters": [
                     {
-                        "name": "listing_id",
+                        "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "listing_id",
+                        "in": "path",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
@@ -3716,16 +3970,6 @@
                             }
                         }
                     },
-                    "501": {
-                        "description": "This endpoint is not functional at this time.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorSchema"
-                                }
-                            }
-                        }
-                    },
                     "500": {
                         "description": "The server encountered an internal error. See the error message for details.",
                         "content": {
@@ -3745,20 +3989,31 @@
                 ]
             }
         },
-        "/v3/application/listings/{listing_id}/translations/{language}": {
+        "/v3/application/shops/{shop_id}/listings/{listing_id}/translations/{language}": {
             "post": {
                 "operationId": "createListingTranslation",
                 "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-01 wt-mr-xs-2\"> Feedback only </span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">Development for this endpoint is in progress. It will only return a 501 response.</p></div>\n\nCreates a ListingTranslation by listing_id and language",
                 "tags": ["ShopListing Translation"],
                 "parameters": [
                     {
-                        "name": "listing_id",
+                        "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "listing_id",
+                        "in": "path",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
@@ -3864,13 +4119,24 @@
                 "tags": ["ShopListing Translation"],
                 "parameters": [
                     {
-                        "name": "listing_id",
+                        "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "listing_id",
+                        "in": "path",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
@@ -3944,13 +4210,24 @@
                 "tags": ["ShopListing Translation"],
                 "parameters": [
                     {
-                        "name": "listing_id",
+                        "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "listing_id",
+                        "in": "path",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     },
@@ -4060,22 +4337,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -4088,24 +4365,24 @@
                                 "properties": {
                                     "quantity": {
                                         "type": "integer",
-                                        "description": "The quantity of this item available for sale. Note: The quantity is the total number of available offerings. The getInventory method will detail quantities for individual offerings."
+                                        "description": "The positive non-zero number of products available for purchase in the listing. Note: The listing quantity is the sum of available offering quantities. You can request the quantities for individual offerings from the ListingInventory resource using the [getListingInventory](/openapi/developeres#operation/getListingInventory) endpoint."
                                     },
                                     "price": {
                                         "type": "number",
-                                        "description": "The item's price (will be treated as private for sold listings). Note: The price is the minimum possible price. The getInventory method will detail exact prices for available offerings.",
+                                        "description": "The positive non-zero price of the product. (Sold product listings are private) Note: The price is the minimum possible price. The getInventory method requests exact prices for available offerings.",
                                         "format": "float"
                                     },
                                     "title": {
                                         "type": "string",
-                                        "description": "The listing's title. This string is valid if it does not match the following pattern: /[^\\p{L}\\p{Nd}\\p{P}\\p{Sm}\\p{Zs}™©®]/u. The characters %, :, & and + can only be used once each."
+                                        "description": "The listing's title string. Valid title strings contain only letters, numbers, punctuation marks, mathematical symbols, whitespace characters, ™, ©, and ®. (regex: /[^\\p{L}\\p{Nd}\\p{P}\\p{Sm}\\p{Zs}™©®]/u) You can only use the %, :, & and + characters once each."
                                     },
                                     "description": {
                                         "type": "string",
-                                        "description": "A description of the item."
+                                        "description": "A description string of the product for sale in the listing."
                                     },
                                     "materials": {
                                         "type": "array",
-                                        "description": "A list of materials used in the item. A material is valid if it does not match the pattern: /[^\\p{L}\\p{Nd}\\p{Zs}]/u",
+                                        "description": "A list of material strings for materials used in the product. Valid materials strings contain only letters, numbers, and whitespace characters. (regex: /[^\\p{L}\\p{Nd}\\p{Zs}]/u) Default value is null.",
                                         "nullable": true,
                                         "items": {
                                             "type": "string",
@@ -4114,53 +4391,53 @@
                                     },
                                     "should_auto_renew": {
                                         "type": "boolean",
-                                        "description": "To renew a listing for another four months, pass the optional parameter renew=true. A listing does not need to be expired to be renewed, however note that each renewal does not take the listing's previous expiration date into account, so any unused time remaining on the listing's old expiration date will be lost. Renewals will result in charges to a user's bill."
+                                        "description": "When true, renews a listing for four months upon expriation. If set to true when previously false, etsy.com renews the listing before it expires, but the renewal period starts immidiately rather than extending the listing's expiration date. Any unused time remaining on the listing is lost. Renewals result in charges to a user's bill."
                                     },
                                     "shipping_profile_id": {
                                         "type": "integer",
-                                        "description": "The numeric ID of the shipping profile associated with the listing.",
+                                        "description": "The numeric ID of the [shipping profile](/openapi/developeres#tag/ShopListing-ShippingProfile) associated with the listing. Default value is null.",
                                         "nullable": true,
                                         "minimum": 1
                                     },
                                     "shop_section_id": {
                                         "type": "integer",
-                                        "description": "The numeric ID of the shop section for this listing.",
+                                        "description": "The numeric ID of the [shop section](/openapi/developeres#tag/Shop-Section) for this listing. Default value is null.",
                                         "nullable": true,
                                         "minimum": 1
                                     },
                                     "item_weight": {
                                         "type": "number",
-                                        "description": "How much the item weighs.",
+                                        "description": "The numeric weight of the product measured in units set in 'item_weight_unit'. Default value is null.",
                                         "format": "float",
                                         "nullable": true
                                     },
                                     "item_length": {
                                         "type": "number",
-                                        "description": "How long the item is.",
+                                        "description": "The numeric length of the product measured in units set in 'item_dimensions_unit'. Default value is null.",
                                         "format": "float",
                                         "nullable": true
                                     },
                                     "item_width": {
                                         "type": "number",
-                                        "description": "How wide the item is.",
+                                        "description": "The numeric width of the product measured in units set in 'item_dimensions_unit'. Default value is null.",
                                         "format": "float",
                                         "nullable": true
                                     },
                                     "item_height": {
                                         "type": "number",
-                                        "description": "How tall the item is.",
+                                        "description": "The numeric height of the product measured in units set in 'item_dimensions_unit'. Default value is null.",
                                         "format": "float",
                                         "nullable": true
                                     },
                                     "item_weight_unit": {
                                         "type": "string",
-                                        "description": "The units used to represent the weight of this item.",
+                                        "description": "A string defining the units used to measure the weight of the product. Default value is null.",
                                         "nullable": true,
                                         "enum": ["oz", "lb", "g", "kg"]
                                     },
                                     "item_dimensions_unit": {
                                         "type": "string",
-                                        "description": "The units used to represent the dimensions of this item.",
+                                        "description": "A string defining the units used to measure the dimensions of the product. Default value is null.",
                                         "nullable": true,
                                         "enum": [
                                             "in",
@@ -4174,16 +4451,16 @@
                                     },
                                     "is_taxable": {
                                         "type": "boolean",
-                                        "description": "If this flag is true, any applicable shop tax rates will be applied to this listing on checkout."
+                                        "description": "When true, applicable [shop](/openapi/developeres#tag/Shop) tax rates apply to this listing at checkout."
                                     },
                                     "taxonomy_id": {
                                         "type": "integer",
-                                        "description": "The seller taxonomy id of the listing",
+                                        "description": "The numeric taxonomy ID of the listing. The seller manages listing taxonomy IDs for their shop.  [See SellerTaxonomy](/openapi/developers#tag/SellerTaxonomy) for more information.",
                                         "minimum": 1
                                     },
                                     "tags": {
                                         "type": "array",
-                                        "description": "A list of tags for the item. A tag is valid if it does not match the pattern: /[^\\p{L}\\p{Nd}\\p{Zs}\\-'™©®]/u",
+                                        "description": "A list of tag strings for the listing. Valid tag strings contain only letters, numbers, whitespace characters, -, ', ™, ©, and ®. (regex: /[^\\p{L}\\p{Nd}\\p{Zs}\\-'™©®]/u) Default value is null.",
                                         "nullable": true,
                                         "items": {
                                             "type": "string",
@@ -4192,7 +4469,7 @@
                                     },
                                     "who_made": {
                                         "type": "string",
-                                        "description": "Who made the item being listed",
+                                        "description": "An enumerated string inidcated who made the product. Helps buyers locate the listing under the Handmade heading.",
                                         "enum": [
                                             "i_did",
                                             "someone_else",
@@ -4201,7 +4478,7 @@
                                     },
                                     "when_made": {
                                         "type": "string",
-                                        "description": "When was the item made.",
+                                        "description": "An enumerated string for the era in which the maker made the product in this listing. Helps buyers locate the listing under the Vintage heading.",
                                         "enum": [
                                             "made_to_order",
                                             "2020_2021",
@@ -4226,31 +4503,31 @@
                                     },
                                     "featured_rank": {
                                         "type": "integer",
-                                        "description": "Position in the featured listings portion of the shop",
+                                        "description": "The positive non-zero numeric position in the featured listings of the shop, with rank 1 listings appearing in the left-most position in featured listing on a shop’s home page.",
                                         "nullable": true
                                     },
                                     "is_personalizable": {
                                         "type": "boolean",
-                                        "description": "Indicates if listing is personalizable"
+                                        "description": "When true, this listing is personalizable. The default value is null."
                                     },
                                     "is_private": {
                                         "type": "boolean",
-                                        "description": "Is this listing a private listing that is intendend for a specific buyer and hidden from shop view."
+                                        "description": "When true, this is a private listing intendend for a specific buyer and hidden from shop view."
                                     },
                                     "publish": {
                                         "type": "boolean",
-                                        "description": "Indicates whether this listing should be published or not.",
+                                        "description": "When true, etsy.com publishes the listing. False does not publish the listing.",
                                         "default": false
                                     },
                                     "type": {
                                         "type": "string",
-                                        "description": "Indicates whether the listing is physical or a digital download.",
+                                        "description": "An enumerated type string that indicates whether the listing is physical or a digital download.",
                                         "enum": ["physical", "download", "both"],
                                         "default": "physical"
                                     },
                                     "state": {
                                         "type": "string",
-                                        "description": "One of active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
+                                        "description": "An enumerated string from any of: active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
                                         "enum": [
                                             "active",
                                             "inactive",
@@ -4263,7 +4540,7 @@
                                     },
                                     "channels": {
                                         "type": "array",
-                                        "description": "A channel is a venue for sellers to reach buyers in order to make sales.",
+                                        "description": "An array of enumerated channel ID strings. A channel is a venue for sellers to reach buyers in order to make sales.",
                                         "items": {
                                             "type": "string",
                                             "enum": [
@@ -4349,22 +4626,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -4410,22 +4687,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "listing_id",
                         "in": "path",
-                        "description": "The unique ID of an Etsy Listing.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID of an Etsy Listing.",
+                            "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -4542,11 +4819,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -4657,11 +4934,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -4738,22 +5015,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "receipt_id",
                         "in": "path",
-                        "description": "A unique ID for a receipt from a specific Etsy Shop.",
+                        "description": "A unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) from a specific Etsy [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "A unique ID for a receipt from a specific Etsy Shop.",
+                            "description": "A unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) from a specific Etsy [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -4817,11 +5094,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -4948,22 +5225,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "receipt_id",
                         "in": "path",
-                        "description": "A unique ID for a receipt from a specific Etsy Shop.",
+                        "description": "A unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) from a specific Etsy [shop](/openapi/developeres#tag/Shop).",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "A unique ID for a receipt from a specific Etsy Shop.",
+                            "description": "A unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) from a specific Etsy [shop](/openapi/developeres#tag/Shop).",
                             "minimum": 1
                         }
                     }
@@ -5027,11 +5304,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -5111,21 +5388,21 @@
                     {
                         "name": "was_paid",
                         "in": "query",
-                        "description": "If true, the seller recieved payment for the product(s) in this receipt.",
+                        "description": "When true, the seller recieved payment for the product(s) in this receipt.",
                         "required": false,
                         "schema": {
                             "type": "boolean",
-                            "description": "If true, the seller recieved payment for the product(s) in this receipt."
+                            "description": "When true, the seller recieved payment for the product(s) in this receipt."
                         }
                     },
                     {
                         "name": "was_shipped",
                         "in": "query",
-                        "description": "If true, the seller shipped the product(s) in this receipt.",
+                        "description": "When true, the seller shipped the product(s) in this receipt.",
                         "required": false,
                         "schema": {
                             "type": "boolean",
-                            "description": "If true, the seller shipped the product(s) in this receipt."
+                            "description": "When true, the seller shipped the product(s) in this receipt."
                         }
                     }
                 ],
@@ -5188,22 +5465,22 @@
                     {
                         "name": "receipt_id",
                         "in": "path",
-                        "description": "The receipt to return transactions for.",
+                        "description": "The unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) detailing a specific transaction.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The receipt to return transactions for.",
+                            "description": "The unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) detailing a specific transaction.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -5296,17 +5573,17 @@
         "/v3/application/shops/{shop_id}/receipts/{receipt_id}/tracking": {
             "post": {
                 "operationId": "createReceiptShipment",
-                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nSubmit tracking information for a ShopReceipt. If send_bcc is true, the shipping notification will be sent to the seller as well. Each time you successfully submit tracking info, a notification email will be sent to the buyer User. If tracking_code and carrier_name aren't sent the receipt is marked as shipped only. Creates a ShopReceiptShipment for the given receipt_id. ",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nSubmits tracking information for a Shop Receipt, which creates a Shop Receipt Shipment entry for the given receipt_id. Each time you successfully submit tracking info, Etsy sends a notification email to the buyer User. When send_bcc is true, Etsy sends shipping notifications to the seller as well. When tracking_code and carrier_name aren't sent, the receipt is marked as shipped only. ",
                 "tags": ["Shop Receipt"],
                 "parameters": [
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -5414,22 +5691,22 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
                     {
                         "name": "receipt_id",
                         "in": "path",
-                        "description": "The receipt to return transactions for.",
+                        "description": "The unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) detailing a specific transaction.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The receipt to return transactions for.",
+                            "description": "The unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) detailing a specific transaction.",
                             "minimum": 1
                         }
                     }
@@ -5482,6 +5759,83 @@
                         "oauth2": ["transactions_r"]
                     }
                 ]
+            }
+        },
+        "/v3/application/shops/{shop_id}/reviews": {
+            "get": {
+                "operationId": "getReviewsByShop",
+                "description": "<div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><span class=\"wt-badge wt-badge--notification-03 wt-mr-xs-2\">Alpha</span><a class=\"wt-text-link\" href=\"https://github.com/etsy/open-api/issues/new/choose\" target=\"_blank\" rel=\"noopener noreferrer\">Give feedback</a></div><div class=\"wt-display-flex-xs wt-align-items-center wt-mt-xs-2 wt-mb-xs-3\"><p class=\"wt-text-body-01 banner-text\">This endpoint is ready for use as defined below, but is access-controlled and may change significantly before launch. If you'd like access, please email <a href=\"mailto:developers@etsy.com\" class=\"wt-text-link\" target=\"_blank\">developers@etsy.com</a>.</p></div>\n\nOpen API V3 to retrieve the reviews from a shop given its ID.",
+                "tags": ["Review"],
+                "parameters": [
+                    {
+                        "name": "shop_id",
+                        "in": "path",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to return.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The maximum number of results to return.",
+                            "minimum": 1,
+                            "maximum": 100,
+                            "default": 25
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The number of records to skip before selecting the first result.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "description": "The number of records to skip before selecting the first result.",
+                            "minimum": 0,
+                            "default": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A set of TransactionReviews",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TransactionReviews"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A resource could not be found. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "The server encountered an internal error. See the error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/v3/application/seller-taxonomy/nodes": {
@@ -5623,11 +5977,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     }
@@ -5846,11 +6200,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     }
@@ -5989,11 +6343,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -6052,11 +6406,11 @@
                     {
                         "name": "shop_id",
                         "in": "path",
-                        "description": "The unique ID for an Etsy Shop.",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The unique ID for an Etsy Shop.",
+                            "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                             "minimum": 1
                         }
                     },
@@ -6174,11 +6528,11 @@
                     {
                         "name": "transaction_id",
                         "in": "path",
-                        "description": "The transaction to return.",
+                        "description": "The unique numeric ID for a transaction.",
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "description": "The transaction to return.",
+                            "description": "The unique numeric ID for a transaction.",
                             "minimum": 1
                         }
                     }
@@ -6537,7 +6891,7 @@
         "schemas": {
             "ShopListing": {
                 "type": "object",
-                "description": "A Listing from a Shop. It shows the Listing information",
+                "description": "A listing from a shop, which contains a product quantity, title, description, price, etc.",
                 "required": [
                     "listing_id",
                     "user_id",
@@ -6585,78 +6939,71 @@
                 "properties": {
                     "listing_id": {
                         "type": "integer",
-                        "description": "The listing's numeric ID.",
+                        "description": "The unique numeric ID for a listing in a specific [shop](/openapi/developeres#tag/Shop).",
                         "minimum": 1
                     },
                     "user_id": {
                         "type": "integer",
-                        "description": "The numeric ID of the user who posted the item.",
+                        "description": "The numeric ID for the user posting the listing.",
                         "minimum": 1
                     },
                     "shop_id": {
                         "type": "integer",
-                        "description": "The shop ID associated with the listing",
+                        "description": "The unique positive non-zero numeric ID for an Etsy Shop.",
                         "minimum": 1
                     },
                     "title": {
                         "type": "string",
-                        "description": "The listing's title. This string is valid if it does not match the following pattern: /[^\\p{L}\\p{Nd}\\p{P}\\p{Sm}\\p{Zs}™©®]/u. The characters %, :, & and + can only be used once each."
+                        "description": "The listing's title string. Valid title strings contain only letters, numbers, punctuation marks, mathematical symbols, whitespace characters, ™, ©, and ®. (regex: /[^\\\\p{L}\\\\p{Nd}\\\\p{P}\\\\p{Sm}\\\\p{Zs}™©®]/u) You can only use the %, :, & and + characters once each."
                     },
                     "description": {
                         "type": "string",
-                        "description": "A description of the item."
+                        "description": "A description string of the product for sale in the listing."
                     },
                     "state": {
                         "type": "string",
-                        "description": "The listing's state.",
-                        "enum": [
-                            "active",
-                            "inactive",
-                            "sold_out",
-                            "draft",
-                            "removed",
-                            "expired"
-                        ]
+                        "description": "An enumerated string from any of: active, removed, sold_out, expired, alchemy, edit, create, private, or unavailable.",
+                        "enum": ["0", "1", "2", "3", "4", "5"]
                     },
                     "creation_timestamp": {
                         "type": "integer",
-                        "description": "Creation time, in epoch seconds.",
+                        "description": "The listing\\'s creation time, in epoch seconds.",
                         "minimum": 946684800
                     },
                     "ending_timestamp": {
                         "type": "integer",
-                        "description": "The listing's expiration date and time, in epoch seconds.",
+                        "description": "The listing\\'s expiration time, in epoch seconds.",
                         "minimum": 946684800
                     },
                     "original_creation_timestamp": {
                         "type": "integer",
-                        "description": "The date and time the listing was originally posted, in epoch seconds.",
+                        "description": "The listing\\'s creation time, in epoch seconds.",
                         "minimum": 946684800
                     },
                     "last_modified_timestamp": {
                         "type": "integer",
-                        "description": "The date and time the listing was updated, in epoch seconds.",
+                        "description": "The time of the last update to the listing, in epoch seconds.",
                         "minimum": 946684800
                     },
                     "state_timestamp": {
                         "type": "integer",
-                        "description": "The time at which the listing last changed state.",
+                        "description": "The date and time of the last state change of this listing.",
                         "minimum": 946684800
                     },
                     "quantity": {
                         "type": "integer",
-                        "description": "The quantity of this item available for sale.",
+                        "description": "The positive non-zero number of products available for purchase in the listing. Note: The listing quantity is the sum of available offering quantities. You can request the quantities for individual offerings from the ListingInventory resource using the [getListingInventory](/openapi/developeres#operation/getListingInventory) endpoint.",
                         "minimum": 0
                     },
                     "shop_section_id": {
                         "type": "integer",
-                        "description": "The numeric ID of the shop section for this listing, can be null",
+                        "description": "The unique ID of an Etsy Shop Section.",
                         "nullable": true,
                         "minimum": 1
                     },
                     "featured_rank": {
                         "type": "integer",
-                        "description": "Position in the Featured Listings portion of the shop."
+                        "description": "The positive non-zero numeric position in the featured listings of the shop, with rank 1 listings appearing in the left-most position in featured listing on a shop’s home page."
                     },
                     "url": {
                         "type": "string",
@@ -6664,36 +7011,36 @@
                     },
                     "views": {
                         "type": "integer",
-                        "description": "The number of times the listing has been viewed on Etsy.com (does not include API views).",
+                        "description": "The number of times users viewed this listing on Etsy.com (does not include API views).",
                         "minimum": 0
                     },
                     "num_favorers": {
                         "type": "integer",
-                        "description": "The number of members who've marked this Listing as a favorite.",
+                        "description": "The number of users who marked this Listing a favorite.",
                         "minimum": 0
                     },
                     "non_taxable": {
                         "type": "boolean",
-                        "description": "If this flag is true, any applicable shop tax rates will not be applied to this listing on checkout."
+                        "description": "When true, applicable [shop](/openapi/developeres#tag/Shop) tax rates do not apply to this listing at checkout."
                     },
                     "is_customizable": {
                         "type": "boolean",
-                        "description": "If this flag is true, a buyer may contact the seller for a customized order. Can only be set when the shop accepts custom orders and defaults to true in that case."
+                        "description": "When true, a buyer may contact the seller for a customized order. The default value is true when a shop accepts custom orders. Does not apply to shops that do not accept custom orders."
                     },
                     "listing_type": {
                         "type": "boolean",
-                        "description": "True if this listing is for a digital download."
+                        "description": "An enumerated type string that indicates whether the listing is physical or a digital download."
                     },
                     "tags": {
                         "type": "array",
-                        "description": "A list of tags for the item. A tag is valid if it does not match the pattern: /[^\\p{L}\\p{Nd}\\p{Zs}\\-'™©®]/u",
+                        "description": "A list of tag strings for the listing. Valid tag strings contain only letters, numbers, whitespace characters, -, ', ™, ©, and ®. (regex: /[^\\\\p{L}\\\\p{Nd}\\\\p{Zs}\\\\-'™©®]/u) Default value is null.",
                         "items": {
                             "type": "string"
                         }
                     },
                     "materials": {
                         "type": "array",
-                        "description": "A list of materials used in the item. A material is valid if it does not match the pattern: /[^\\p{L}\\p{Nd}\\p{Zs}]/u",
+                        "description": "A list of material strings for materials used in the product. Valid materials strings contain only letters, numbers, and whitespace characters. (regex: /[^\\\\p{L}\\\\p{Nd}\\\\p{Zs}]/u) Default value is null.",
                         "items": {
                             "type": "string"
                         }
@@ -6706,25 +7053,25 @@
                     },
                     "processing_min": {
                         "type": "integer",
-                        "description": "The minimum number of days for processing for this listing.",
+                        "description": "The minimum number of days required to process this listing. Default value is null.",
                         "nullable": true,
                         "minimum": 0
                     },
                     "processing_max": {
                         "type": "integer",
-                        "description": "The maximum number of days for processing for this listing.",
+                        "description": "The maximum number of days required to process this listing. Default value is null.",
                         "nullable": true,
                         "minimum": 0
                     },
                     "who_made": {
                         "type": "string",
-                        "description": "Who made the item being listed.",
+                        "description": "An enumerated string inidcated who made the product. Helps buyers locate the listing under the Handmade heading.",
                         "nullable": true,
                         "enum": ["i_did", "someone_else", "collective"]
                     },
                     "when_made": {
                         "type": "string",
-                        "description": "When was the item made.",
+                        "description": "An enumerated string for the era in which the maker made the product in this listing. Helps buyers locate the listing under the Vintage heading.",
                         "nullable": true,
                         "enum": [
                             "made_to_order",
@@ -6750,47 +7097,47 @@
                     },
                     "item_weight": {
                         "type": "number",
-                        "description": "How much the item weighs.",
+                        "description": "The numeric weight of the product measured in units set in \\'item_weight_unit\\'. Default value is null.",
                         "format": "float",
                         "nullable": true
                     },
                     "item_weight_unit": {
                         "type": "string",
-                        "description": "The units used to represent the dimensions of this item.",
+                        "description": "A string defining the units used to measure the weight of the product. Default value is null.",
                         "nullable": true,
                         "enum": ["oz", "lb", "g", "kg"]
                     },
                     "item_length": {
                         "type": "number",
-                        "description": "How long the item is.",
+                        "description": "The numeric length of the product measured in units set in \\'item_dimensions_unit\\'. Default value is null.",
                         "format": "float",
                         "nullable": true
                     },
                     "item_width": {
                         "type": "number",
-                        "description": "How wide the item is.",
+                        "description": "The numeric width of the product measured in units set in \\'item_dimensions_unit\\'. Default value is null.",
                         "format": "float",
                         "nullable": true
                     },
                     "item_height": {
                         "type": "number",
-                        "description": "How tall the item is.",
+                        "description": "The numeric length of the product measured in units set in \\'item_dimensions_unit\\'. Default value is null.",
                         "format": "float",
                         "nullable": true
                     },
                     "item_dimensions_unit": {
                         "type": "string",
-                        "description": "The units used to represent the dimensions of this item.",
+                        "description": "A string defining the units used to measure the dimensions of the product. Default value is null.",
                         "nullable": true,
                         "enum": ["in", "ft", "mm", "cm", "m", "yd", "inches"]
                     },
                     "is_private": {
                         "type": "boolean",
-                        "description": "Is this listing a private listing that is intended for a specific buyer and hidden from shop view. *Note*: This field is experimental and may change at any time."
+                        "description": "When true, this is a private listing intendend for a specific buyer and hidden from shop view."
                     },
                     "recipient": {
                         "type": "string",
-                        "description": "Who is this listing for.",
+                        "description": "An enumerated string indicating a person for whom this product would make an appropriate gift. Default value is null.",
                         "nullable": true,
                         "enum": [
                             "men",
@@ -6814,7 +7161,7 @@
                     },
                     "occasion": {
                         "type": "string",
-                        "description": "What is the occasion for this listing.",
+                        "description": "An enumerated string indicating an occassion for which this product would make an appropriate gift. Default value is null.",
                         "nullable": true,
                         "enum": [
                             "anniversary",
@@ -6854,26 +7201,26 @@
                     },
                     "style": {
                         "type": "array",
-                        "description": "Style of this listing. Each style is a free-form text string such as \"Formal\", or \"Steampunk\". A Listing may have up to two styles. A style is valid if it does not match the pattern: /[^\\p{L}\\p{Nd}\\p{Zs}]/u",
+                        "description": "An array of style strings for this listing, each of which is free-form text string such as \\\"Formal\\\", or \\\"Steampunk\\\". A Listing may have up to two styles. Valid style strings contain only letters, numbers, and whitespace characters. (regex: /[^\\\\p{L}\\\\p{Nd}\\\\p{Zs}]/u) Default value is null.",
                         "items": {
                             "type": "string"
                         }
                     },
                     "file_data": {
                         "type": "string",
-                        "description": "Written description of the files attached to this digital listing."
+                        "description": "A string describing the files attached to a digital listing."
                     },
                     "has_variations": {
                         "type": "boolean",
-                        "description": "Variations available for this Listing."
+                        "description": "When true, the listing has variations."
                     },
                     "should_auto_renew": {
                         "type": "boolean",
-                        "description": "True if this listing has been set to automatic renewals."
+                        "description": "When true, renews a listing for four months upon expriation. If set to true when previously false, etsy.com renews the listing before it expires, but the renewal period starts immidiately rather than extending the listing's expiration date. Any unused time remaining on the listing is lost. Renewals result in charges to a user's bill."
                     },
                     "language": {
                         "type": "string",
-                        "description": "The IETF language tag (e.g. 'fr') for the language in which the listing is returned.",
+                        "description": "The IETF language tag for the default language of the listing. Ex: `de`, `en`, `es`, `fr`, `it`, `ja`, `nl`, `pl`, `pt`, `ru`.",
                         "nullable": true
                     },
                     "price": {
@@ -6907,25 +7254,6 @@
                 "properties": {
                     "error": {
                         "type": "string"
-                    }
-                }
-            },
-            "ShopListingFiles": {
-                "type": "object",
-                "description": "Represents several ShopListingFiles.",
-                "required": ["count", "results"],
-                "properties": {
-                    "count": {
-                        "type": "integer",
-                        "description": "The number of ShopListingFiles being returned..",
-                        "minimum": 0
-                    },
-                    "results": {
-                        "type": "array",
-                        "description": "An array of ShopListingFile resources.",
-                        "items": {
-                            "$ref": "#/components/schemas/ShopListingFile"
-                        }
                     }
                 }
             },
@@ -6979,6 +7307,25 @@
                         "type": "integer",
                         "description": "The time when this ShopListingFile was uploaded, in epoch seconds.",
                         "minimum": 946684800
+                    }
+                }
+            },
+            "ShopListingFiles": {
+                "type": "object",
+                "description": "Represents several ShopListingFiles.",
+                "required": ["count", "results"],
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "description": "The number of ShopListingFiles being returned..",
+                        "minimum": 0
+                    },
+                    "results": {
+                        "type": "array",
+                        "description": "An array of ShopListingFile resources.",
+                        "items": {
+                            "$ref": "#/components/schemas/ShopListingFile"
+                        }
                     }
                 }
             },
@@ -7389,6 +7736,7 @@
                     "origin_country_iso",
                     "is_deleted",
                     "shipping_profile_destinations",
+                    "shipping_profile_upgrades",
                     "origin_postal_code"
                 ],
                 "properties": {
@@ -7437,6 +7785,13 @@
                         "description": "Set of destinations of this shipping profile.",
                         "items": {
                             "$ref": "#/components/schemas/ListingShippingProfileDestination"
+                        }
+                    },
+                    "shipping_profile_upgrades": {
+                        "type": "array",
+                        "description": "Set of shipping upgrades for this shipping profile.",
+                        "items": {
+                            "$ref": "#/components/schemas/ListingShippingProfileUpgrade"
                         }
                     },
                     "origin_postal_code": {
@@ -7519,47 +7874,13 @@
                     }
                 }
             },
-            "ListingShippingProfileDestinations": {
-                "type": "object",
-                "description": "Represents several ListingShippingProfileDestinations.",
-                "required": ["count", "results"],
-                "properties": {
-                    "count": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "results": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ListingShippingProfileDestination"
-                        }
-                    }
-                }
-            },
-            "ListingShippingProfiles": {
-                "type": "object",
-                "description": "Represents several ListingShippingProfiles.",
-                "required": ["count", "results"],
-                "properties": {
-                    "count": {
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "results": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ListingShippingProfile"
-                        }
-                    }
-                }
-            },
             "ListingShippingProfileUpgrade": {
                 "type": "object",
                 "description": "A representation of shipping upgrade info.",
                 "required": [
                     "shipping_profile_id",
-                    "label_id",
-                    "label",
+                    "upgrade_id",
+                    "upgrade_name",
                     "type",
                     "rank",
                     "language",
@@ -7576,14 +7897,14 @@
                         "description": "The numeric ID of the parent shipping profile.",
                         "minimum": 1
                     },
-                    "label_id": {
+                    "upgrade_id": {
                         "type": "integer",
                         "description": "The numeric ID of this shipping upgrade.",
                         "minimum": 1
                     },
-                    "label": {
+                    "upgrade_name": {
                         "type": "string",
-                        "description": "Label for the shipping upgrade shown to shoppers at checkout, e.g. USPS Priority."
+                        "description": "Name for the shipping upgrade shown to shoppers at checkout, e.g. USPS Priority."
                     },
                     "type": {
                         "type": "string",
@@ -7628,6 +7949,40 @@
                         "nullable": true,
                         "minimum": 1,
                         "maximum": 45
+                    }
+                }
+            },
+            "ListingShippingProfileDestinations": {
+                "type": "object",
+                "description": "Represents several ListingShippingProfileDestinations.",
+                "required": ["count", "results"],
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ListingShippingProfileDestination"
+                        }
+                    }
+                }
+            },
+            "ListingShippingProfiles": {
+                "type": "object",
+                "description": "Represents several ListingShippingProfiles.",
+                "required": ["count", "results"],
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ListingShippingProfile"
+                        }
                     }
                 }
             },
@@ -8168,11 +8523,10 @@
             },
             "ShopReceipt": {
                 "type": "object",
-                "description": "A purchase from a shop. The ShopReceipt displays monetary values using the shop's currency.",
+                "description": "The record of a purchase from a shop. Shop receipts display monetary values using the shop's currency.",
                 "required": [
                     "receipt_id",
                     "receipt_type",
-                    "order_id",
                     "seller_user_id",
                     "buyer_user_id",
                     "name",
@@ -8206,106 +8560,101 @@
                 "properties": {
                     "receipt_id": {
                         "type": "integer",
-                        "description": "The ID for the ShopReceipt.",
+                        "description": "A unique numeric ID for a [receipt](/openapi/developers#tag/Shop-Receipt) from a specific Etsy [shop](/openapi/developeres#tag/Shop).",
                         "minimum": 1
                     },
                     "receipt_type": {
                         "type": "integer",
-                        "description": "The Etsy channel on which the purchase occured. 0 for Etsy.com, 1 for a Pattern shop.",
+                        "description": "The numeric value for the Etsy channel that serviced the purchase: 0 for Etsy.com, 1 for a Pattern shop.",
                         "minimum": 0
-                    },
-                    "order_id": {
-                        "type": "integer",
-                        "description": "The ID of the order this ShopReceipt is associated with.",
-                        "minimum": 1
                     },
                     "seller_user_id": {
                         "type": "integer",
-                        "description": "The ID of the seller User.",
+                        "description": "The numeric ID for the [user](/openapi/developeres#tag/User) fulfilling the purchase.",
                         "minimum": 1
                     },
                     "buyer_user_id": {
                         "type": "integer",
-                        "description": "The ID of the buyer User.",
+                        "description": "The numeric ID for the [user](/openapi/developeres#tag/User) making the purchase.",
                         "minimum": 1
                     },
                     "name": {
                         "type": "string",
-                        "description": "The name for the buyer's shipping address."
+                        "description": "The name string for the recipient in the shipping address."
                     },
                     "first_line": {
                         "type": "string",
-                        "description": "The first line for the buyer's shipping address."
+                        "description": "The first address line string for the recipient in the shipping address."
                     },
                     "second_line": {
                         "type": "string",
-                        "description": "The second line for the buyer's shipping address.",
+                        "description": "The optional second address line string for the recipient in the shipping address.",
                         "nullable": true
                     },
                     "city": {
                         "type": "string",
-                        "description": "The city for the buyer's shipping address."
+                        "description": "The city string for the recipient in the shipping address."
                     },
                     "state": {
                         "type": "string",
-                        "description": "The state for the buyer's shipping address."
+                        "description": "The state string for the recipient in the shipping address."
                     },
                     "zip": {
                         "type": "string",
-                        "description": "The zip for the buyer's shipping address."
+                        "description": "The zip code string (not necessarily a number) for the recipient in the shipping address."
                     },
                     "formatted_address": {
                         "type": "string",
-                        "description": "The locally formatted address strng of the buyer's shipping address."
+                        "description": "The formatted shipping address string for the recipient in the shipping address."
                     },
                     "country_iso": {
                         "type": "string",
-                        "description": "The ISO-3166 alpha-2 country code of the buyer's shipping address."
+                        "description": "The ISO-3166 alpha-2 country code string for the recipient in the shipping address."
                     },
                     "payment_method": {
                         "type": "string",
-                        "description": "The payment method for the ShopReceipt."
+                        "description": "The payment method string identifying purchaser's payment method, which must be one of: \\'cc\\' (credit card), \\'paypal\\', \\'check\\', \\'mo\\' (money order), \\'bt\\' (bank transfer), \\'other\\', \\'ideal\\', \\'sofort\\', \\'apple_pay\\', \\'google\\', \\'android_pay\\', \\'google_pay\\', \\'klarna\\', \\'k_pay_in_4\\' (klarna), or \\'k_financing\\' (klarna)."
                     },
                     "payment_email": {
                         "type": "string",
-                        "description": "The email address where payment confirmation is sent."
+                        "description": "The email address string for the email address to which to send payment confirmation"
                     },
                     "message_from_seller": {
                         "type": "string",
-                        "description": "An optional message from the seller.",
+                        "description": "An optional message string from the seller.",
                         "nullable": true
                     },
                     "message_from_buyer": {
                         "type": "string",
-                        "description": "An optional message from the buyer.",
+                        "description": "An optional message string from the buyer.",
                         "nullable": true
                     },
                     "message_from_payment": {
                         "type": "string",
-                        "description": "The machine generated acknowledgement from the payment system",
+                        "description": "The machine-generated acknowledgement string from the payment system.",
                         "nullable": true
                     },
                     "is_paid": {
                         "type": "boolean",
-                        "description": "True if the receipt is paid."
+                        "description": "When true, buyer paid for this purchase."
                     },
                     "is_shipped": {
                         "type": "boolean",
-                        "description": "True if the item is shipped."
+                        "description": "When true, seller shipped the products."
                     },
                     "create_timestamp": {
                         "type": "integer",
-                        "description": "Creation time, in epoch seconds.",
+                        "description": "The receipt\\'s creation time, in epoch seconds.",
                         "minimum": 946684800
                     },
                     "update_timestamp": {
                         "type": "integer",
-                        "description": "Last update time, in epoch seconds.",
+                        "description": "The time of the last update to the receipt, in epoch seconds.",
                         "minimum": 946684800
                     },
                     "gift_message": {
                         "type": "string",
-                        "description": "If the purchase was marked as a gift, the message the buyer wants sent with the gift."
+                        "description": "A gift message string the buyer requests delivered with the product."
                     },
                     "grandtotal": {
                         "$ref": "#/components/schemas/Money"
@@ -8333,7 +8682,7 @@
                     },
                     "shipments": {
                         "type": "array",
-                        "description": "ShopShipments for this ShopReceipt.",
+                        "description": "A list of shipment statements for this receipt.",
                         "items": {
                             "$ref": "#/components/schemas/ShopReceiptShipment"
                         }
@@ -8342,7 +8691,7 @@
             },
             "ShopReceiptShipment": {
                 "type": "object",
-                "description": "A shipment event for a ShopReceipt. A single ShopReceipt may have many ShopReceiptShipment events.",
+                "description": "The record of one shipment event for a ShopReceipt. A receipt may have many ShopReceiptShipment records.",
                 "required": [
                     "receipt_shipping_id",
                     "shipment_notification_timestamp",
@@ -8352,22 +8701,22 @@
                 "properties": {
                     "receipt_shipping_id": {
                         "type": "integer",
-                        "description": "The ID for the ShopReceiptShipment.",
+                        "description": "The unique numeric ID of a Shop Receipt Shipment record.",
                         "nullable": true,
                         "minimum": 1
                     },
                     "shipment_notification_timestamp": {
                         "type": "integer",
-                        "description": "The time at which the buyer is notified of the shipment event, in epoch seconds.",
+                        "description": "The time at which Etsy notified the buyer of the shipment event, in epoch seconds.",
                         "minimum": 946684800
                     },
                     "carrier_name": {
                         "type": "string",
-                        "description": "The name of the carrier, the company responsible for delivering the package."
+                        "description": "The name string for the carrier/company responsible for delivering the shipment."
                     },
                     "tracking_code": {
                         "type": "string",
-                        "description": "The tracking code for the ShopReceiptShipment."
+                        "description": "The tracking code string provided by the carrier/company for the shipment."
                     }
                 }
             },
@@ -8386,6 +8735,98 @@
                         "items": {
                             "$ref": "#/components/schemas/ShopReceipt"
                         }
+                    }
+                }
+            },
+            "TransactionReviews": {
+                "type": "object",
+                "description": "A set of transaction review records left by Users.",
+                "required": ["count", "results"],
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "description": "The number of TransactionReview resources found.",
+                        "minimum": 0
+                    },
+                    "results": {
+                        "type": "array",
+                        "description": "The TransactionReview resources found.",
+                        "items": {
+                            "$ref": "#/components/schemas/TransactionReview"
+                        }
+                    }
+                }
+            },
+            "TransactionReview": {
+                "type": "object",
+                "description": "A transaction review record left by a User.",
+                "required": [
+                    "shop_id",
+                    "listing_id",
+                    "receipt_id",
+                    "transaction_id",
+                    "buyer_user_id",
+                    "rating",
+                    "review",
+                    "language",
+                    "image_url_fullxfull",
+                    "create_timestamp",
+                    "update_timestamp"
+                ],
+                "properties": {
+                    "shop_id": {
+                        "type": "integer",
+                        "description": "The shop's numeric ID.",
+                        "minimum": 1
+                    },
+                    "listing_id": {
+                        "type": "integer",
+                        "description": "The ID of the ShopListing that the TransactionReview belongs to.",
+                        "minimum": 1
+                    },
+                    "receipt_id": {
+                        "type": "integer",
+                        "description": "The ID of the ShopReceipt that the TransactionReview belongs to.",
+                        "minimum": 1
+                    },
+                    "transaction_id": {
+                        "type": "integer",
+                        "description": "The ID of the ShopReceiptTransaction that the TransactionReview belongs to.",
+                        "minimum": 1
+                    },
+                    "buyer_user_id": {
+                        "type": "integer",
+                        "description": "The numeric ID of the user who was the buyer in this transaction. Note: This field may be absent, depending on the buyer's privacy settings.",
+                        "nullable": true,
+                        "minimum": 1
+                    },
+                    "rating": {
+                        "type": "integer",
+                        "description": "Rating value on scale from 1 to 5",
+                        "minimum": 0
+                    },
+                    "review": {
+                        "type": "string",
+                        "description": "A message left by the author, explaining the feedback."
+                    },
+                    "language": {
+                        "type": "string",
+                        "description": "The language of the TransactionReview"
+                    },
+                    "image_url_fullxfull": {
+                        "type": "string",
+                        "description": "The url to a photo provided with the feedback, dimensions fullxfull. Note: This field may be absent, depending on the buyer's privacy settings.",
+                        "nullable": true
+                    },
+                    "create_timestamp": {
+                        "type": "integer",
+                        "description": "The date and time the TransactionReview was created in epoch seconds.",
+                        "minimum": 946684800
+                    },
+                    "update_timestamp": {
+                        "type": "integer",
+                        "description": "The date and time the TransactionReview was updated in epoch seconds.",
+                        "minimum": 946684800
                     }
                 }
             },
@@ -8637,7 +9078,8 @@
                     "is_direct_checkout_onboarded",
                     "is_calculated_eligible",
                     "is_opted_in_to_buyer_promise",
-                    "is_shop_us_based"
+                    "is_shop_us_based",
+                    "transaction_sold_count"
                 ],
                 "properties": {
                     "shop_id": {
@@ -8821,6 +9263,11 @@
                     "is_shop_us_based": {
                         "type": "boolean",
                         "description": "True if shop is based in the US."
+                    },
+                    "transaction_sold_count": {
+                        "type": "integer",
+                        "description": "The total sales for the shop",
+                        "minimum": 0
                     }
                 }
             },
@@ -8856,7 +9303,7 @@
                 "properties": {
                     "shop_section_id": {
                         "type": "integer",
-                        "description": "The numeric ID of the shop section.",
+                        "description": "The unique ID of an Etsy Shop Section.",
                         "minimum": 1
                     },
                     "title": {
