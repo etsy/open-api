@@ -5,11 +5,9 @@ Etsy is a global marketplace for unique and creative goods. We’re driven by ou
 
 ## What we’re doing
 
-We’re working on a new version of our Open API. For several months, we’ve been building a new foundation for updated endpoints and drafting new documentation. The goal of this work is to meet the needs of Etsy’s developer community and make it easier for our team to quickly make updates to the Open API when those needs change.
+We’re developing a new version of our Open API. Over the last year, we built a new foundation for updated endpoints and drafting new documentation. The goal of this work is to meet the needs of Etsy’s developer community and make it easier for our team to quickly update the Open API when those needs change.
 
-We’ve built over 60 endpoints that are ready for your feedback. Open API v3 is focused on three main use cases—listing management, post-purchase order management, and shop management. You can explore these new endpoints, including request and response schemas, on our new [API Reference](https://www.etsy.com/openapi/developers) site.
-
-**If you’d like to make requests to our Open API v3 endpoints, [fill out this form](https://docs.google.com/forms/d/e/1FAIpQLSc4qzVlgjkzEkaQvpgX00xvJLjlomRoS-60G9ob_FqCfmbCrA/viewform?usp=sf_link).**
+Open API v3 is focused on three main use cases — listing management, post-purchase order management, and shop management. We built approximately 70 endpoints that address those use cases and they are ready for your feedback. You can explore these new endpoints, including request and response specifications, on our new [API Reference](https://www.etsy.com/openapi/developers) site.
 
 
 ## Why we’re building in the open
@@ -17,44 +15,39 @@ We’ve built over 60 endpoints that are ready for your feedback. Open API v3 is
 We’ve spent a lot of time poring over data and charts, but we recognize that our users know their needs best. We also have a hunch that many of you share the same needs. By sharing our plans, documentation, and progress on Github we can all work together to build the Open API that you need.
 
 
-## What you’ll find here
+## How to get started
 
-We’re publishing early drafts of documentation here for your feedback—we’ll make adjustments based on what we hear from you to make it as useful as possible. You’ll find our [OpenAPI Specification](http://spec.openapis.org/oas/v3.0.3) (OAS) file that defines the interface for our API and powers our reference documentation site. You’ll also find Markdown files that will be published to our new documentation hub, which is launching in the coming months.
+We have created a new documentation site for Open API v3, which can be found at [developers.etsy.com](https://developers.etsy.com). We’ll continue to add new content, but we’ve provided a migration guide and documented some API Basics. If you are looking for specific documentation or have feedback, feel free to [create an issue](https://github.com/etsy/open-api/issues/new/choose).
 
-Take a look at the following resources for more information on how to implement Open API v3:
+**To start using our Open API v3 endpoints, [fill out this form](https://docs.google.com/forms/d/e/1FAIpQLSc4qzVlgjkzEkaQvpgX00xvJLjlomRoS-60G9ob_FqCfmbCrA/viewform?usp=sf_link).**
 
-* A [migration guide](https://github.com/etsy/open-api/blob/main/docs/migration-guide.md)
-* Implementation instructions for [OAuth2.0](https://www.etsy.com/developers/documentation/getting_started/oauth2)
+### Useful links to get started
+
+* [Migrating to v3](https://developers.etsy.com/documentation/migration/index)
+* [OAuth2 authentication](https://developers.etsy.com/documentation/essentials/oauth2)
+* [Making requests](https://developers.etsy.com/documentation/essentials/requests)
+* [API v3 reference docs](https://www.etsy.com/openapi/developers)
 
 
 ## What kind of feedback are we looking for?
 
-We’d love to hear about feature requests, proposed endpoint schema changes, bug reports, and any documentation issues. If you’d like to suggest a change or leave general feedback, please [let us know](https://github.com/etsy/open-api/issues/new/choose).
+We’d love to hear about feature requests, proposed endpoint schema changes, bug reports, and any documentation issues. Please [open an issue](https://github.com/etsy/open-api/issues/new/choose) to suggest a change or leave general feedback.
 
 
 ## How to provide feedback
 
-We’ve built several [issue templates](https://github.com/etsy/open-api/issues/new/choose) to make it easier for you to provide feedback. Generally, bugs and feature requests for API v3 or docs should be Github issues. Everything else should go to [developers@etsy.com](mailto:developers@etsy.com).
+We’ve built several [issue templates](https://github.com/etsy/open-api/issues/new/choose) to make it easier for you. Generally, bugs and feature requests for API v3 or docs should be Github issues. Everything else should be sent as a support request to [developers@etsy.com](mailto:developers@etsy.com).
 
-We also tried to make it easy to provide feedback directly from our API reference docs. Each endpoint definition includes a link to file a bug or feature request with some details filled in.
-
-Finally, we’d love it if you submitted pull requests on our Markdown files. Everyone who contributes to the v3 rollout will get a shoutout when we launch.
+We also aimed to make it easy to provide feedback directly from our API reference docs. Each endpoint definition includes a link to file a bug or feature request with some details filled in.
 
 Note that by submitting your feedback, we have the right to use it.
 
 Legalese-wise, this means it’s considered non-confidential and non-proprietary to you, and you grant Etsy a non-exclusive, worldwide, royalty-free, irrevocable, sub-licensable, perpetual license to use and publish those ideas and materials for any purpose, without compensation to you.
 
 
-## Want to provide additional, individualized feedback?
-
-If you’d like to participate in user feedback sessions with Etsy’s research team, [fill out this form](https://docs.google.com/forms/d/e/1FAIpQLSdSzNrZxDCv1KHlvQfrNIJ9sNzYfivn_cgHA9rDkFMBZ08Kaw/viewform?usp=sf_link).
-
-
 ## Community guidelines
 
 We’ve also included Etsy’s Open Source [Code of Conduct](https://etsy.github.io/codeofconduct.html). We expect all community members to abide by this code when participating in discussions or providing feedback.
-
-
 
 
 &copy; 2011-2021 Etsy, Inc. All Rights Reserved. Use of this code is subject to Etsy's API Developer Terms of Use, available at [https://www.etsy.com/legal/api](https://www.etsy.com/legal/api)
