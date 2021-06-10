@@ -7,7 +7,7 @@ Etsy is a global marketplace for unique and creative goods. We’re driven by ou
 
 We’re developing a new version of our Open API. Over the last year, we built a new foundation for updated endpoints and drafting new documentation. The goal of this work is to meet the needs of Etsy’s developer community and make it easier for our team to quickly update the Open API when those needs change.
 
-Open API v3 is focused on three main use cases — listing management, post-purchase order management, and shop management. We built approximately 70 endpoints that address those use cases and they are ready for your feedback. You can explore these new endpoints, including request and response specifications, on our new [API Reference](https://www.etsy.com/openapi/developers) site.
+Open API v3 is focused on three main use cases — listing management, post-purchase order management, and shop management. We built approximately 70 endpoints that address those use cases and they are ready for your feedback. You can explore these new endpoints, including request and response specifications, on our new [API Reference](https://developers.etsy.com/documentation/reference) site.
 
 
 ## Why we’re building in the open
@@ -17,9 +17,9 @@ We’ve spent a lot of time poring over data and charts, but we recognize that o
 
 ## How to get started
 
-We have created a new documentation site for Open API v3, which can be found at [developers.etsy.com](https://developers.etsy.com). We’ll continue to add new content, but we’ve provided a migration guide and documented some API Basics. If you are looking for specific documentation or have feedback, feel free to [create an issue](https://github.com/etsy/open-api/issues/new/choose).
+We have created a new documentation site for Open API v3, which can be found at [developers.etsy.com/documentation](https://developers.etsy.com/documentation). We’ll continue to add new content, but we’ve provided a migration guide and documented some API Basics. If you are looking for specific documentation or have feedback, feel free to [create an issue](https://github.com/etsy/open-api/issues/new/choose).
 
-**To start using our Open API v3 endpoints, [fill out this form](https://docs.google.com/forms/d/e/1FAIpQLSc4qzVlgjkzEkaQvpgX00xvJLjlomRoS-60G9ob_FqCfmbCrA/viewform?usp=sf_link).**
+Any developer with an active Etsy application can make requests using our Open API v3 endpoints. Visit [etsy.com/developers/your-apps](https://etsy.com/developers/your-apps) to find your API Key.
 
 ### Useful links to get started
 
