@@ -27,6 +27,7 @@ Any developer with an active Etsy application can make requests using our Open A
 * [OAuth2 authentication](https://developers.etsy.com/documentation/essentials/oauth2)
 * [Making requests](https://developers.etsy.com/documentation/essentials/requests)
 * [API v3 reference docs](https://www.etsy.com/openapi/developers)
+* [OpenAPI Specification JSON](https://www.etsy.com/openapi/generated/oas/3.0.0.json)
 
 
 ## What kind of feedback are we looking for?
