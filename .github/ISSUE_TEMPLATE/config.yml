@@ -1,4 +1,8 @@
+blank_issues_enabled: false
 contact_links:
-    - name: 🤔 Questions and Help
-      url: https://www.etsy.com/developers/documentation/resources/developer_resources
-      about: For questions and help regarding OpenAPI v2, or your implementation of the new OpenAPI v3, please email us at developers@etsy.com
+    - name: 💬 Discussions
+      url: https://github.com/etsy/open-api/discussions
+      about: Engage with the Etsy Open API community via GitHub discussions where you'll find announcements, Q&A, and more. 
+    - name: 📖 Developer Documentation
+      url: https://developers.etsy.com/documentation/
+      about: The Etsy Open API v3 documentation with guides, references, tutorials, and more. 
