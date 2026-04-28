@@ -1,0 +1,27 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ⚠️ Before posting
+        **Do NOT publish API keys, tokens, keystrings, passwords, certificates, or any sensitive data.**
+
+        If needed, redact values like:
+        ```
+        sk-123456 → sk-****
+        ```
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I confirm this post does NOT contain sensitive data for my account.
+          required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Question / discussion
+      description: Describe your question
+    validations:
+      required: true
